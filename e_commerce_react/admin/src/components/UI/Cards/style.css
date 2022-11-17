@@ -1,0 +1,32 @@
+.home__cards {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(280px, 1fr)) [auto-fit];
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-gap: 20px;
+}
+
+.home__cards--item {
+  background: white;
+}
+
+.home__cards--title {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.home__cards--count {
+  color: #1c2260;
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin: 0.8rem 0;
+}
+
+.home__cards--view {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.home__cards--view a {
+  color: #006fbb;
+}
