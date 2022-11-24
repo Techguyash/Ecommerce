@@ -1,25 +1,27 @@
 import React from "react";
+import styles from "./Login.module.css";
+import "./Login.css";
 
 const OverLay = (props) => {
   return (
     <div className="overlay_container">
       <div className="overlay">
         <div className="overlay_panel overlay_left">
-          <h1>Welcome to Track Me</h1>
-          <p>All your needs met here</p>
+          <h1 className={styles.bold}>Welcome to Track Me</h1>
+          <p className={styles.para}>All your needs met here</p>
           <button
             onClick={props.toggleSigningComponent}
-            className="press"
+            className={`${styles.press} ${styles.btn}`}
             id="signIn"
           >
             SignIn
           </button>
         </div>
         <div className="overlay_panel overlay_right">
-          <h1>Show yourself</h1>
-          <p> Dont have Account Click here 👇</p>
+          <h1 className={styles.bold}>Show yourself</h1>
+          <p className={styles.para}> Dont have Account Click here 👇</p>
           <button
-            className="press"
+            className={`${styles.press} ${styles.btn}`}
             onClick={props.toggleSigningComponent}
             id="signUp"
           >

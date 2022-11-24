@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Login.css";
+import styles from "./Login.module.css";
 import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 const SignUp = (props) => {
@@ -26,38 +26,43 @@ const SignUp = (props) => {
   };
 
   return (
-    <div className="form_container sign_up_container">
-      <form onSubmit={submitHandler}>
-        <h1>Create Account</h1>
-        <div className="social_container">
-          <a className="social">
+    <div className={`form_container sign_up_container`}>
+      <form onSubmit={submitHandler} className={styles.form}>
+        <h1 className={styles.bold}>Create Account</h1>
+        <div className={styles["social_container"]}>
+          <a className={styles.social}>
             <FaFacebookF />
           </a>
-          <a className="social">
+          <a className={styles.social}>
             <FcGoogle />
           </a>
-          <span className="social">
-            <i className="fab fa-google-plus-g"></i>
-          </span>
-          <span className="social">
-            <i className="fab fa-linkedin-in"></i>
-          </span>
         </div>
-        <span>or use your email for registeration</span>
-        <input type="text" placeholder="Name" onChange={nameChangeHandler} />
-        <input type="email" placeholder="Email" onChange={emailChangeHandler} />
+        <span className={styles.f12}>or use your email for registeration</span>
+        <input
+          type="text"
+          placeholder="Name"
+          onChange={nameChangeHandler}
+          className={styles.inp}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={emailChangeHandler}
+          className={styles.inp}
+        />
         <input
           type="password"
           placeholder="Password"
           onChange={passwordChangeHandler}
+          className={styles.inp}
         />
-        <input type="tel" placeholder="Phone" onChange={phoneChangeHandler} />
-        <button type="submit" className="btn_sign">
+
+        <button type="submit" className={styles.btn}>
           Sign Up
         </button>
         <span
           onClick={props.toggleSigningComponent}
-          className="createAcc_responsive"
+          className={styles["createAcc_responsive"]}
         >
           Already having account
         </span>
