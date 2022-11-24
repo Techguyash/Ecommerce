@@ -11,7 +11,7 @@ import Footer from "../../components/Banner/Footer/Footer";
 
 const Home = () => {
   return (
-    <>
+    <React.Fragment>
       <NavBar />
       <div className="l-main">
         <BannerMain />
@@ -25,7 +25,7 @@ const Home = () => {
         <Subscription />
         <Footer />
       </div>
-    </>
+    </React.Fragment>
   );
 };
 
