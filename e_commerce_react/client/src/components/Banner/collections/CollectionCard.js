@@ -2,15 +2,15 @@ import React from "react";
 
 const CollectionCard = ({ img, heading, title }) => {
   return (
-    <div class="collection__box">
-      <img src={img} alt="" class="collection__img" />
-      <div class="collection__data">
-        <h2 class="collection__title">
-          <span class="collection__subtitle">{heading}</span>
+    <div className="collection__box">
+      <img src={img} alt="" className="collection__img" />
+      <div className="collection__data">
+        <h2 className="collection__title">
+          <span className="collection__subtitle">{heading}</span>
           <br />
           {title}
         </h2>
-        <a href="#" class="collection__view">
+        <a href="#" className="collection__view">
           View collection
         </a>
       </div>

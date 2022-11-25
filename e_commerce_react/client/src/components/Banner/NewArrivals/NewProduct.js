@@ -3,10 +3,10 @@ import Button from "../../UI/Button";
 
 const NewProduct = ({ img }) => {
   return (
-    <div class="new__box">
-      <img src={img} alt="" class="new__img" />
+    <div className="new__box">
+      <img src={img} alt="" className="new__img" />
 
-      <div class="new__link">
+      <div className="new__link">
         <Button> VIEW PRODUCT</Button>
       </div>
     </div>

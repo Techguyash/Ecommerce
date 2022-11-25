@@ -6,13 +6,13 @@ import img4 from "../../../assets/home/feature4.png";
 import FeaturePCard from "./FeaturePCard";
 const FeaturedProducts = () => {
   return (
-    <section class="featured section" id="featured">
-      <h2 class="section-title">FEATURED PRODUCTS</h2>
-      <a href="#" class="section-all">
+    <section className="featured section" id="featured">
+      <h2 className="section-title">FEATURED PRODUCTS</h2>
+      <a href="#" className="section-all">
         VIEW ALL
       </a>
 
-      <div class="featured__container bd-grid">
+      <div className="featured__container bd-grid">
         <FeaturePCard imgUrl={img1} name="Headphone One Black" price="29" />
         <FeaturePCard imgUrl={img2} name="Speaker Beats Pill" price="199" />
         <FeaturePCard imgUrl={img3} name="Apple Air Pods" price="122" />

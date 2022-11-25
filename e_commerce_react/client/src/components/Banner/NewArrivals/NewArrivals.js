@@ -9,13 +9,13 @@ import NewProduct from "./NewProduct";
 
 const NewArrivals = () => {
   return (
-    <section class="new section" id="new">
-      <h2 class="section-title">NEW ARRIVALS</h2>
-      <a href="#" class="section-all">
+    <section className="new section" id="new">
+      <h2 className="section-title">NEW ARRIVALS</h2>
+      <a href="#" className="section-all">
         View All
       </a>
 
-      <div class="new__container bd-grid">
+      <div className="new__container bd-grid">
         <NewProduct img={img1} />
         <NewProduct img={img2} />
         <NewProduct img={img3} />

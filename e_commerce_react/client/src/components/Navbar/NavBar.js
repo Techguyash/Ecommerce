@@ -1,44 +1,43 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
+import Button from "../UI/Button";
 
-
-const NavBar = () => {
+const NavBar = (props) => {
+  const { toggleShowLogin } = useContext(AuthContext);
   return (
-    <header class="l-header">
-      <nav class="nav bd-grid">
+    <header className="l-header">
+      <nav className="nav bd-grid">
         <div>
-          <a href="#" class="nav__logo">
-            TRACKME
-          </a>
+          <h3 className="nav__logo">TRACKME</h3>
         </div>
 
-        <div class="nav__menu" id="nav-menu">
-          <ul class="nav__list">
-            <li class="nav__item">
-              <a href="#home" class="nav__link active">
-                Home
-              </a>
+        <div className="nav__menu" id="nav-menu">
+          <ul className="nav__list">
+            <li className="nav__item">
+              <h4 className="nav__link active">Home</h4>
             </li>
-            <li class="nav__item">
-              <a href="#featured" class="nav__link">
-                Featured
-              </a>
+            <li className="nav__item">
+              <h4 className="nav__link">Featured</h4>
             </li>
-            <li class="nav__item">
-              <a href="#new" class="nav__link">
+            <li className="nav__item">
+              <h4 href="#new" className="nav__link">
                 New
-              </a>
+              </h4>
             </li>
-            <li class="nav__item">
-              <a href="#suscribed" class="nav__link">
-                Suscribed
-              </a>
+            <li className="nav__item">
+              <h4 className="nav__link">Suscribed</h4>
+            </li>
+            <li className="nav__item">
+              <h4 className="nav__link" onClick={toggleShowLogin}>
+                Login
+              </h4>
             </li>
           </ul>
         </div>
 
         <div>
-          <i class="bx bxs-cart nav__cart"></i>
-          <i class="bx bx-menu nav__toggle" id="nav-toggle"></i>
+          <i className="bx bxs-cart nav__cart"></i>
+          <i className="bx bx-menu nav__toggle" id="nav-toggle"></i>
         </div>
       </nav>
     </header>

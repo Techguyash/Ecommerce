@@ -9,9 +9,9 @@ import NewArrivals from "../../components/Banner/NewArrivals/NewArrivals";
 import Subscription from "../../components/Banner/Subscription/Subscription";
 import Footer from "../../components/Banner/Footer/Footer";
 
-const Home = () => {
+const Home = (props) => {
   return (
-    <>
+    <div className="home">
       <NavBar />
       <div className="l-main">
         <BannerMain />
@@ -25,7 +25,7 @@ const Home = () => {
         <Subscription />
         <Footer />
       </div>
-    </>
+    </div>
   );
 };
 
