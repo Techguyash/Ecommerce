@@ -148,6 +148,7 @@ img {
 .nav__link {
   color: var(--dark-color);
   font-weight: var(--font-semi);
+  cursor: pointer;
 }
 
 .nav__link:hover {
@@ -221,6 +222,26 @@ img {
 
 .button:hover {
   background-color: var(--first-color-alt);
+}
+
+.loginBtn {
+  background-color: var(--first-color);
+  color: var(--white-color);
+  padding: 1rem;
+  font-size: var(--small-font-size);
+  font-weight: var(--font-semi);
+  transition: 0.1s;
+  outline: none;
+  border: none;
+  height: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.loginBtn:hover {
+  background-color: var(--first-color-alt);
+  color: white;
 }
 
 .collection__container {

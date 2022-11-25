@@ -28,7 +28,7 @@ const NavBar = (props) => {
               <h4 className="nav__link">Suscribed</h4>
             </li>
             <li className="nav__item">
-              <h4 className="nav__link" onClick={toggleShowLogin}>
+              <h4 className="nav__link loginBtn" onClick={toggleShowLogin}>
                 Login
               </h4>
             </li>
