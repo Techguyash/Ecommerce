@@ -1,15 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import "./App.css";
+import NavBar from "./components/Navbar/NavBar";
 import { AuthContext } from "./context/authContext";
 import Home from "./Page/Home/Home";
 import Login from "./Page/Login/Login";
+import SingleProduct from "./Page/SingleProduct/SingleProduct";
 function App() {
-  const { showLoginScreen, toggleShowLogin } = useContext(AuthContext);
+  const { showLoginScreen } = useContext(AuthContext);
 
   return (
     <React.Fragment>
-      <Home />
+      <div className="home">
+        <NavBar />
+        {/* <Home /> */}
+      </div>
       {showLoginScreen && <Login />}
+      <SingleProduct />
     </React.Fragment>
   );
 }

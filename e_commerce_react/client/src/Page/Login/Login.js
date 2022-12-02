@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import styles from "./Login.module.css";
 import OverLay from "./OverLay";
-import OverlayComp from "../../components/UI/OverlayComp";
+import OverlayComp from "../../components/UI/OverLay/OverlayComp";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 

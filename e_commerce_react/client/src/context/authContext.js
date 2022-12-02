@@ -3,7 +3,7 @@ import reducer from "../reducer/AuthReducer";
 const AuthContext = createContext();
 
 const initialState = {
-  isLoggedIn: false,
+  isLoggedIn: true,
   isLoading: false,
   isError: false,
   showLoginScreen: false,

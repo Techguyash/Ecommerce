@@ -11,20 +11,17 @@ import Footer from "../../components/Banner/Footer/Footer";
 
 const Home = (props) => {
   return (
-    <div className="home">
-      <NavBar />
-      <div className="l-main">
-        <BannerMain />
-        <BannerCollection />
-        <FeaturedProducts />
-        <AdBanner
-          title="Special Offer"
-          description=" Special offers discounts for women this week only"
-        />
-        <NewArrivals />
-        <Subscription />
-        <Footer />
-      </div>
+    <div className="l-main">
+      <BannerMain />
+      <BannerCollection />
+      <FeaturedProducts />
+      <AdBanner
+        title="Special Offer"
+        description=" Special offers discounts for women this week only"
+      />
+      <NewArrivals />
+      <Subscription />
+      <Footer />
     </div>
   );
 };

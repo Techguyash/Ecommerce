@@ -1,9 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
-import Button from "../UI/Button";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FiUser } from "react-icons/fi";
+import DropDown from "../UI/DropDown/DropDown";
 
 const NavBar = (props) => {
-  const { toggleShowLogin } = useContext(AuthContext);
+  const { isLoggedIn, toggleShowLogin } = useContext(AuthContext);
+
+  const LoggedInMenus = () => {
+    return (
+      <>
+        <li className="nav__item">
+          <h4 className="nav__link nav_icon">
+            <AiOutlineShoppingCart />
+          </h4>
+        </li>
+
+        <li className="nav__item">
+          <h4 className=" nav_icon">
+            <DropDown />
+          </h4>
+        </li>
+      </>
+    );
+  };
+
   return (
     <header className="l-header">
       <nav className="nav bd-grid">
@@ -13,7 +34,7 @@ const NavBar = (props) => {
 
         <div className="nav__menu" id="nav-menu">
           <ul className="nav__list">
-            <li className="nav__item">
+            {/* <li className="nav__item">
               <h4 className="nav__link active">Home</h4>
             </li>
             <li className="nav__item">
@@ -23,15 +44,18 @@ const NavBar = (props) => {
               <h4 href="#new" className="nav__link">
                 New
               </h4>
-            </li>
-            <li className="nav__item">
-              <h4 className="nav__link">Suscribed</h4>
-            </li>
-            <li className="nav__item">
-              <h4 className="nav__link loginBtn" onClick={toggleShowLogin}>
-                Login
-              </h4>
-            </li>
+            </li> */}
+
+            {/* not logged in states */}
+            {!isLoggedIn && (
+              <li className="nav__item">
+                <h4 className="nav__link loginBtn" onClick={toggleShowLogin}>
+                  Login
+                </h4>
+              </li>
+            )}
+            {/* logged in states */}
+            {isLoggedIn && <LoggedInMenus />}
           </ul>
         </div>
 
