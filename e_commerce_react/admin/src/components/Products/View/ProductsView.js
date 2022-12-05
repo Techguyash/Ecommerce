@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "../../axiosInstance";
 import { useNavigate } from "react-router-dom";
 import emptyImg from "../../../assets/busy-marketing.svg";
 import Pagination from "../../UI/Pagination";
 import { fetchProducts } from "../ProductsAPI";
 import Product from "./Product";
-import { useRecoilState } from "recoil";
-
+import { ProductsContext } from "../../../store/ProductsContext";
 //Uncomment this to see the available product view
 
 // let availableProducts = [
@@ -172,6 +171,8 @@ const AvailableProducts = () => {
 };
 
 const ProductsView = (props) => {
+  const context = useContext(ProductsContext);
+
   const [productList, setProductList] = useState(false);
   const [error, setError] = useState(null);
 

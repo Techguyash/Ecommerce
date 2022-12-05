@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import axios from "../../axiosInstance";
@@ -14,6 +14,7 @@ import SideBar from "./SideBar";
 
 const CreateProduct = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({});
   const [images, setImages] = useState([]);
 
