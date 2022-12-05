@@ -1,7 +1,9 @@
 package com.ecommerce.backend.controller;
 
 import com.ecommerce.backend.apiResponse.APIResponse;
-import com.ecommerce.backend.dto.ProductDTO;
+
+import com.ecommerce.backend.dto.ProductReqDTO;
+import com.ecommerce.backend.dto.ProductResDTO;
 import com.ecommerce.backend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/products")
 public class ProductController
@@ -20,19 +21,18 @@ public class ProductController
     ProductService productService;
 
     @PostMapping
-    public ResponseEntity<APIResponse> createProduct(@RequestBody @Valid ProductDTO req)
+    public ResponseEntity<APIResponse> createProduct(@RequestBody @Valid ProductReqDTO req)
     {
         APIResponse response = new APIResponse();
-        ProductDTO product = productService.createProduct(req);
+        ProductResDTO product = productService.createProduct(req);
         response.setData(product);
-
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<APIResponse> getProduct(@PathVariable long id)
     {
-        ProductDTO product = productService.getProduct(id);
+        ProductResDTO product = productService.getProduct(id);
         APIResponse response = new APIResponse();
         response.setData(product);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -41,17 +41,17 @@ public class ProductController
     @GetMapping()
     public ResponseEntity<APIResponse> getAllProduct()
     {
-        List<ProductDTO> allProducts = productService.getAllProducts();
+        List<ProductResDTO> allProducts = productService.getAllProducts();
         APIResponse response = new APIResponse();
         response.setData(allProducts);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<APIResponse> updateProduct(@RequestBody @Valid ProductDTO req)
+    public ResponseEntity<APIResponse> updateProduct(@RequestBody @Valid ProductReqDTO req)
     {
         APIResponse response = new APIResponse();
-        ProductDTO product = productService.updateProduct(req);
+        ProductResDTO product = productService.updateProduct(req);
         response.setData(product);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -64,6 +64,4 @@ public class ProductController
         response.setData(result);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
 }

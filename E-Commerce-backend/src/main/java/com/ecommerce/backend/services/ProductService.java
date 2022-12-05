@@ -1,19 +1,21 @@
 package com.ecommerce.backend.services;
 
 import com.ecommerce.backend.dto.ProductDTO;
+import com.ecommerce.backend.dto.ProductReqDTO;
+import com.ecommerce.backend.dto.ProductResDTO;
 import com.ecommerce.backend.model.Category;
 
 import java.util.List;
 
 public interface ProductService
 {
-    ProductDTO createProduct(ProductDTO Product);
+    ProductResDTO createProduct(ProductReqDTO Product);
 
-    ProductDTO getProduct(long id);
+    ProductResDTO getProduct(long id);
 
-    List<ProductDTO> getAllProducts();
+    List<ProductResDTO> getAllProducts();
 
-    ProductDTO updateProduct(ProductDTO req);
+    ProductResDTO updateProduct(ProductReqDTO req);
 
     boolean deleteProduct(long Id);
 
