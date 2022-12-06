@@ -19,6 +19,19 @@ const Form = (props) => {
         }}
       />
 
+      <p className="my-1">Brand</p>
+      <input
+        type="text"
+        placeholder="e.g. Adidas, Sony"
+        className="input"
+        name="productName"
+        ref={titleRef}
+        onBlur={() => {
+          props.formData.title = titleRef.current.value;
+          console.log(props.formData);
+        }}
+      />
+
       <p className="my-1">Description (optional)</p>
       <textarea
         cols="30"

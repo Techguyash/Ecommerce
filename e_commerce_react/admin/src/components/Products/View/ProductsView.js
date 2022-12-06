@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
-import axios from "../../axiosInstance";
 import { useNavigate } from "react-router-dom";
 import emptyImg from "../../../assets/busy-marketing.svg";
 import Pagination from "../../UI/Pagination";
-import { fetchProducts } from "../ProductsAPI";
 import Product from "./Product";
 import { ProductsContext } from "../../../store/ProductsContext";
 //Uncomment this to see the available product view
@@ -62,11 +60,8 @@ const EmptyProducts = (props) => {
   );
 };
 
-const AvailableProducts = () => {
+const AvailableProducts = ({ products }) => {
   const [availableProducts, setAvailableProducts] = useState([]);
-  if (availableProducts.length < 1) {
-    fetchProducts(setAvailableProducts);
-  }
 
   let navigate = useNavigate();
 
@@ -151,15 +146,8 @@ const AvailableProducts = () => {
           <p className="table--heading--col5">actions</p>
         </div>
 
-        {availableProducts.map((data) => {
-          return (
-            <Product
-              key={data.productId}
-              data={data}
-              img={"8.jpg"}
-              setAvailableProducts={setAvailableProducts}
-            />
-          );
+        {products.map((data) => {
+          return <Product key={data.productId} data={data} />;
         })}
 
         {/* <!-- Paginate --> */}
@@ -171,27 +159,15 @@ const AvailableProducts = () => {
 };
 
 const ProductsView = (props) => {
-  const context = useContext(ProductsContext);
-
-  const [productList, setProductList] = useState(false);
-  const [error, setError] = useState(null);
-
-  axios
-    .get("/products")
-    .then((response) => {
-      if (response.data.data.length > 0) {
-        setProductList(true);
-        setError(null);
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-      setError(err.message);
-    });
+  const { products } = useContext(ProductsContext);
 
   return (
     <div className="products">
-      {!productList ? <EmptyProducts /> : <AvailableProducts />}
+      {products.length < 1 ? (
+        <EmptyProducts />
+      ) : (
+        <AvailableProducts products={products} />
+      )}
     </div>
   );
 };
