@@ -1,6 +1,5 @@
 package com.ecommerce.backend.services;
 
-import com.ecommerce.backend.dto.ProductDTO;
 import com.ecommerce.backend.dto.ProductReqDTO;
 import com.ecommerce.backend.dto.ProductResDTO;
 import com.ecommerce.backend.model.Category;

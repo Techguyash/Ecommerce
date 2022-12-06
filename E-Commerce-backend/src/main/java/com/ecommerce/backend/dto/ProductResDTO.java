@@ -28,11 +28,11 @@ public class ProductResDTO
 	private Category category;
 	private long sku;
 	private int warranty;
-	private String colorVariants;
+	private String[] colorVariants;
 	private double rating;
 	private double stock;
 	@NotNull(message = "must not be empty")
 	private String brandName;
-	private boolean replacementPolicy;
+	private int replacementPolicy;
 	private List<ImageUrls> imageUrl;
 }

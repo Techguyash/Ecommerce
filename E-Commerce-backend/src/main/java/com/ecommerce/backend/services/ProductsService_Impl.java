@@ -30,8 +30,14 @@ public class ProductsService_Impl implements ProductService
     @Override
     public ProductResDTO createProduct(ProductReqDTO req)
     {
+
         Product product = modelMapper.map(req, Product.class);
+        //Convert the color list into single string
+        String colorsAsString=String.join(",",req.getColorVariants());
+        product.setColorVariants(colorsAsString);
+        //get the image urls to create entity
         List<String> reqImageUrl = req.getImageUrl();
+
         List<ImageUrls> ImageEntityList=new ArrayList<>();
         for(String url : reqImageUrl)
         {
@@ -43,7 +49,10 @@ public class ProductsService_Impl implements ProductService
         List<ImageUrls> imageUrls = imageUrlRepo.saveAll(ImageEntityList);
         product.setImageUrl(imageUrls);
         Product savedEntity = productsRepo.save(product);
-        return modelMapper.map(savedEntity, ProductResDTO.class);
+        ProductResDTO responseEntity = modelMapper.map(savedEntity, ProductResDTO.class);
+        String[] colorArray = savedEntity.getColorVariants().split(",");
+        responseEntity.setColorVariants(colorArray);
+        return responseEntity;
 
     }
 
@@ -51,7 +60,10 @@ public class ProductsService_Impl implements ProductService
     public ProductResDTO getProduct(long id)
     {
         Product product = productsRepo.findById(id).orElseThrow(() -> new NoDataFoundException("Product", String.valueOf(id)));
-        return modelMapper.map(product, ProductResDTO.class);
+        String[] splittedColor = product.getColorVariants().split(",");
+        ProductResDTO mappedEntity = modelMapper.map(product, ProductResDTO.class);
+        mappedEntity.setColorVariants(splittedColor);
+        return mappedEntity;
     }
 
     @Override
@@ -60,7 +72,9 @@ public class ProductsService_Impl implements ProductService
         List<Product> all = productsRepo.findAll();
         List<ProductResDTO> resDTO=new ArrayList<>();
         all.stream().forEach(product -> {
+            String[] splittedColor = product.getColorVariants().split(",");
             ProductResDTO mappedEntity = modelMapper.map(product, ProductResDTO.class);
+            mappedEntity.setColorVariants(splittedColor);
             resDTO.add(mappedEntity);
         });
         return resDTO;

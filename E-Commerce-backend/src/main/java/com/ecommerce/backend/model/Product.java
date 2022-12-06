@@ -30,7 +30,7 @@ public class Product
     private double rating;
     private double stock;
     private String brandName;
-    private boolean replacementPolicy;
+    private int replacementPolicy;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
