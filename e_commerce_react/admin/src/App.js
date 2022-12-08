@@ -17,11 +17,9 @@ import Customers from "./components/Customers/Customers";
 import Vendor from "./components/Vendors/View/VendorView";
 import CreateVendor from "./components/Vendors/Create/CreateVendor";
 
-import Variants from "../src/components/Products/Create/Variants";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
-  const [txt, settxt] = useState("sd");
   return (
     <PageLayout>
       <Routes>

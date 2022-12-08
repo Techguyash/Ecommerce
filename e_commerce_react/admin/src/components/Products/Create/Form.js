@@ -4,7 +4,7 @@ const Form = (props) => {
   const titleRef = useRef();
   const brandNameRef = useRef();
   const descriptionRef = useRef();
-  const [featured, setfeatured] = useState(false);
+  const [featured, setFeatured] = useState(false);
 
   return (
     <div className="products__create__main--addInfo card py-2 px-2 bg-white">
@@ -15,9 +15,13 @@ const Form = (props) => {
         className="input"
         name="productName"
         ref={titleRef}
+        value={props.titleInput}
         onBlur={() => {
           props.formData.productName = titleRef.current.value;
           console.log(props.formData);
+        }}
+        onChange={(e) => {
+          props.setTitleInput(e.target.value);
         }}
       />
 
@@ -50,7 +54,11 @@ const Form = (props) => {
       {/* <!-- featured --> */}
       <label className="checkbox-container mt-3">
         Make this product featured
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          checked={featured}
+          onChange={() => setFeatured(!featured)}
+        />
         <span className="checkmark"></span>
       </label>
     </div>

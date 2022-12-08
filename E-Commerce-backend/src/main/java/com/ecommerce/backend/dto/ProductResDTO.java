@@ -31,6 +31,9 @@ public class ProductResDTO
 	private String[] colorVariants;
 	private double rating;
 	private double stock;
+
+	private boolean featuredProduct;
+	private boolean isPublished;
 	@NotNull(message = "must not be empty")
 	private String brandName;
 	private int replacementPolicy;

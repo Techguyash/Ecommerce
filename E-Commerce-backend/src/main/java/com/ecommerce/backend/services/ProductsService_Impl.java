@@ -33,8 +33,13 @@ public class ProductsService_Impl implements ProductService
 
         Product product = modelMapper.map(req, Product.class);
         //Convert the color list into single string
-        String colorsAsString=String.join(",",req.getColorVariants());
-        product.setColorVariants(colorsAsString);
+        List<String> colorVariants = req.getColorVariants();
+        if(colorVariants.size()>0)
+        {
+            String colorsAsString = String.join(",", colorVariants);
+            product.setColorVariants(colorsAsString);
+        }
+
         //get the image urls to create entity
         List<String> reqImageUrl = req.getImageUrl();
 

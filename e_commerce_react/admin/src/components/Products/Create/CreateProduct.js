@@ -18,6 +18,15 @@ const CreateProduct = () => {
 
   const [formData, setFormData] = useState({});
   const [images, setImages] = useState([]);
+  const [titleInput, setTitleInput] = useState("");
+  const [formError, setFormError] = useState({
+    productName: false,
+    description: false,
+    brandName: false,
+    originalPrice: false,
+    price: false,
+    category: false,
+  });
 
   const navigateToproductView = () => {
     navigate("/products/view");
@@ -51,7 +60,61 @@ const CreateProduct = () => {
     return data;
   };
 
+  const validateFormData = () => {
+    let result = false;
+    if (formData.productName.length < 5) {
+      setFormError((prev) => {
+        prev.productName = true;
+        result = true;
+        return prev;
+      });
+    }
+    if (formData.description.length < 15) {
+      setFormError((prev) => {
+        prev.description = true;
+        result = true;
+        return prev;
+      });
+    }
+    if (formData.brandName.length < 1) {
+      setFormError((prev) => {
+        prev.brandName = true;
+        result = true;
+        return prev;
+      });
+    }
+    if (formData.originalPrice < 1) {
+      setFormError((prev) => {
+        prev.originalPrice = true;
+        result = true;
+        return prev;
+      });
+    }
+
+    if (formData.price < 1) {
+      setFormError((prev) => {
+        prev.price = true;
+        result = true;
+        return prev;
+      });
+    }
+
+    if (formData.category === null) {
+      setFormError((prev) => {
+        prev.category = true;
+        result = true;
+        return prev;
+      });
+    }
+
+    return result;
+  };
+
   const onSaveToServer = async () => {
+    if (validateFormData()) {
+      return;
+    }
+
     const ImageUrls = await uploadImagesToFireBase();
     formData.imageUrl = ImageUrls;
     axios
@@ -90,7 +153,11 @@ const CreateProduct = () => {
       </div>
       <div className="products__create__cardWrapper mt-2">
         <div className="products__create__main">
-          <Form formData={formData} />
+          <Form
+            formData={formData}
+            titleInput={titleInput}
+            setTitleInput={setTitleInput}
+          />
 
           <div className="products__create__main--media card py-2 px-2 bg-white mt-2">
             <h3>Media</h3>
@@ -108,7 +175,13 @@ const CreateProduct = () => {
                 name="myfile"
               />
             </form> */}
-            <ImageUploader images={images} setImages={setImages} />
+            {titleInput.length > 5 ? (
+              <ImageUploader images={images} setImages={setImages} />
+            ) : (
+              <h4 className="mt-2" style={{ fontWeight: "400", color: "red" }}>
+                Please Enter the product name first
+              </h4>
+            )}
             <div className="products__create__main--media--images mt-2">
               <ul className="products__create__main--media--images--list list-unstyled">
                 {/* <ProductImgCard /> */}

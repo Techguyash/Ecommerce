@@ -2,7 +2,6 @@ import { useEffect, useReducer, createContext } from "react";
 import reducer from "../reducer/ProductReducer";
 import axios from "../components/axiosInstance";
 import swal from "sweetalert";
-import { useNavigate } from "react-router-dom";
 
 const ProductsContext = createContext({
   isLoading: false,
@@ -46,7 +45,7 @@ const ProductsContextProvider = ({ children }) => {
   };
 
   const INITIAL_STATE = {
-    isLoading: false,
+    isLoading: true,
     isError: false,
     products: [],
     deleteProductHandler: deleteProductHandler,

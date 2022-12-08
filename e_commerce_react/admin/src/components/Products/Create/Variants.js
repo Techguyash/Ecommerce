@@ -8,8 +8,6 @@ const Footer = ({ formData }) => {
   const [colorInput, setColorInput] = useState("");
 
   // Setting default size and colors to array of strings
-  formData.colorVariants = colorsArray;
-  formData.sizeVariants = sizeArray;
 
   const colorElementRemoveHandler = (indexToRemove) => {
     const filteredValue = colorsArray.filter((data, index) => {
@@ -33,7 +31,7 @@ const Footer = ({ formData }) => {
       temp.push(input);
       setColors(temp);
       setColorInput("");
-      formData.colorVariants = colorsArray;
+      if (enableVariants) formData.colorVariants = colorsArray;
     }
   };
   const addSizeHandler = (e) => {
@@ -43,7 +41,7 @@ const Footer = ({ formData }) => {
       temp.push(input);
       setSizes(temp);
       setsizeInput("");
-      formData.sizeVariants = sizeArray;
+      if (enableVariants) formData.sizeVariants = sizeArray;
     }
   };
 
