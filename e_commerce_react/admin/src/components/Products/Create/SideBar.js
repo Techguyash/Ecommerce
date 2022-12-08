@@ -51,9 +51,8 @@ const SideBar = (props) => {
                   return data;
                 }
               });
-
-              // console.log(category[0]);
               props.formData.category = category[0];
+              console.log(props.formData);
             }}
             onClick={fetchCollectionData}
           >

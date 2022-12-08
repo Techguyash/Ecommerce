@@ -2,7 +2,9 @@ import React, { useRef, useState } from "react";
 
 const Form = (props) => {
   const titleRef = useRef();
+  const brandNameRef = useRef();
   const descriptionRef = useRef();
+  const [featured, setfeatured] = useState(false);
 
   return (
     <div className="products__create__main--addInfo card py-2 px-2 bg-white">
@@ -14,7 +16,7 @@ const Form = (props) => {
         name="productName"
         ref={titleRef}
         onBlur={() => {
-          props.formData.title = titleRef.current.value;
+          props.formData.productName = titleRef.current.value;
           console.log(props.formData);
         }}
       />
@@ -24,10 +26,10 @@ const Form = (props) => {
         type="text"
         placeholder="e.g. Adidas, Sony"
         className="input"
-        name="productName"
-        ref={titleRef}
+        name="brandName"
+        ref={brandNameRef}
         onBlur={() => {
-          props.formData.title = titleRef.current.value;
+          props.formData.brandName = brandNameRef.current.value;
           console.log(props.formData);
         }}
       />

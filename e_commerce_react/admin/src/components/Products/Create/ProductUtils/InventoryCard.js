@@ -1,10 +1,15 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 const InventoryCard = (props) => {
   const skuRef = useRef();
   const barCodeRef = useRef();
   const inventoryeRef = useRef();
   const warrantyRef = useRef();
+  const replacementPolicyRef = useRef();
+  const ratingRef = useRef();
+
+  const [replacementPolicy, setreplacementPolicy] = useState(0);
+  const [rating, setRating] = useState(3.4);
 
   return (
     <div className="products__create__main--inventory card py-2 px-2 bg-white mt-2">
@@ -18,6 +23,9 @@ const InventoryCard = (props) => {
             className="input mt-1"
             name="sku"
             ref={skuRef}
+            onBlur={() => {
+              props.formData.sku = skuRef.current.value;
+            }}
           />
         </div>
         <div>
@@ -28,6 +36,9 @@ const InventoryCard = (props) => {
             name="barcode"
             ref={barCodeRef}
             className="input mt-1"
+            onBlur={() => {
+              props.formData.barCode = barCodeRef.current.value;
+            }}
           />
         </div>
         <div>
@@ -39,7 +50,7 @@ const InventoryCard = (props) => {
             ref={inventoryeRef}
             className="input mt-1"
             onBlur={() => {
-              props.formData.inventory = inventoryeRef.current.value;
+              props.formData.stock = inventoryeRef.current.value;
             }}
           />
         </div>
@@ -51,6 +62,9 @@ const InventoryCard = (props) => {
             name="warranty"
             ref={warrantyRef}
             className="input mt-1"
+            onBlur={() => {
+              props.formData.warranty = warrantyRef.current.value;
+            }}
           />
         </div>
         <div>
@@ -59,10 +73,15 @@ const InventoryCard = (props) => {
             id="warranty"
             type="text"
             name="warranty"
-            ref={warrantyRef}
+            value={replacementPolicy}
             className="input mt-1"
             placeholder="0 for no replacement"
-            value={0}
+            onBlur={() => {
+              props.formData.replacementPolicy = replacementPolicy;
+            }}
+            onChange={(e) => {
+              setreplacementPolicy(e.target.value);
+            }}
           />
         </div>
         <div>
@@ -71,9 +90,15 @@ const InventoryCard = (props) => {
             id="warranty"
             type="text"
             name="warranty"
-            ref={warrantyRef}
+            ref={ratingRef}
             className="input mt-1"
-            value={3.3}
+            value={rating}
+            onBlur={() => {
+              props.formData.rating = rating;
+            }}
+            onChange={(e) => {
+              setRating(e.target.value);
+            }}
           />
         </div>
       </div>

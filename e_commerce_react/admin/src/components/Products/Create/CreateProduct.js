@@ -11,6 +11,7 @@ import Form from "./Form";
 import InventoryCard from "./ProductUtils/InventoryCard";
 import PricingCard from "./ProductUtils/PricingCard";
 import SideBar from "./SideBar";
+import { async } from "@firebase/util";
 
 const CreateProduct = () => {
   const navigate = useNavigate();
@@ -22,27 +23,37 @@ const CreateProduct = () => {
     navigate("/products/view");
   };
 
-  const saveImageToFirebase = () => {
-    if (images[0].file == null) {
+  const uploadImagesToFireBase = async () => {
+    const imageUrl = [];
+    if (images.length < 1) {
       console.log("No image selected");
       return;
     }
 
-    const imageRef = ref(
-      storage,
-      `products/${formData.title + "_" + v4()}`.trim()
-    );
-
-    uploadBytes(imageRef, images[0].file).then((res) => {
-      getDownloadURL(res.ref).then((url) => {
-        formData.productImgUrl = "Hello dummy url!";
-      });
-      // console.log(formData);
-      onSaveToServer();
-    });
+    const imageData = [];
+    for (const item of images) {
+      const imageRef = ref(
+        storage,
+        `products/${formData.title + "_" + v4()}`.trim()
+      );
+      imageData.push(uploadBytes(imageRef, item.file));
+    }
+    const uploadResults = await Promise.all(imageData);
+    // console.log(uploadResults);
+    for (const item of uploadResults) {
+      imageUrl.push(getDownloadURL(item.ref));
+    }
+    const downloadURLResult = await Promise.all(imageUrl);
+    const data = [];
+    for (const item of downloadURLResult) {
+      data.push(item);
+    }
+    return data;
   };
 
   const onSaveToServer = async () => {
+    const ImageUrls = await uploadImagesToFireBase();
+    formData.imageUrl = ImageUrls;
     axios
       .post("/products", formData)
       .then((response) => {
@@ -122,14 +133,14 @@ const CreateProduct = () => {
           </div>
           <PricingCard formData={formData} />
           <InventoryCard formData={formData} />
-          <Footer />
+          <Footer formData={formData} />
         </div>
         <SideBar formData={formData} />
       </div>
 
       <div className="dflex justify-content-between align-items-center my-3">
         <button className="btn btn-danger">Delete</button>
-        <button className="btn btn-secondary" onClick={saveImageToFirebase}>
+        <button className="btn btn-secondary" onClick={onSaveToServer}>
           Save
         </button>
       </div>

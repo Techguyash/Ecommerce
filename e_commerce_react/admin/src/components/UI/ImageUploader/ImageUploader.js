@@ -6,14 +6,12 @@ import ImageContaine from "./ImageContaine";
 const ImageUploader = ({ images, setImages }) => {
   const [isError, setisError] = useState(false);
 
-  const maxNumber = 1;
+  const maxNumber = 5;
   const maxFileSize = 6000000;
   let errorDescription;
 
   const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
-
-    // console.log(imageList[0].file, addUpdateIndex);
+    console.log(imageList, addUpdateIndex);
 
     setImages(imageList);
   };
@@ -35,6 +33,7 @@ const ImageUploader = ({ images, setImages }) => {
   return (
     <div className="App">
       <ImageUploading
+        multiple={true}
         value={images}
         onChange={onChange}
         maxNumber={maxNumber}

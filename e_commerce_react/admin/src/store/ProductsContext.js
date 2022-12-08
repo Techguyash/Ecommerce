@@ -2,8 +2,14 @@ import { useEffect, useReducer, createContext } from "react";
 import reducer from "../reducer/ProductReducer";
 import axios from "../components/axiosInstance";
 import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
-const ProductsContext = createContext();
+const ProductsContext = createContext({
+  isLoading: false,
+  isError: false,
+  products: [],
+  deleteProductHandler: () => {},
+});
 
 const ProductsContextProvider = ({ children }) => {
   const getProducts = async () => {

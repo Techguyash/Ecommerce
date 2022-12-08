@@ -61,8 +61,6 @@ const EmptyProducts = (props) => {
 };
 
 const AvailableProducts = ({ products }) => {
-  const [availableProducts, setAvailableProducts] = useState([]);
-
   let navigate = useNavigate();
 
   const navigateProductAdd = () => {
