@@ -5,11 +5,13 @@ const PricingCard = (props) => {
   const sellingPrice = useRef();
   return (
     <div className="products__create__main--pricing card py-2 px-2 bg-white mt-2">
-      <h3 className="mb-2">Pricing</h3>
+      <h3 className="mb-2">Pricing </h3>
 
       <div className="products__create__main--pricing--col">
         <div>
-          <label>Price</label>
+          <label>
+            Price <span className="my-1 text-danger">*</span>
+          </label>
           <input
             id="price"
             type="text"
@@ -21,7 +23,10 @@ const PricingCard = (props) => {
           />
         </div>
         <div>
-          <label>Compare at Original Price</label>
+          <label>
+            Compare at Original Price
+            <span className="my-1 text-danger">*</span>
+          </label>
           <input
             id="compare-price"
             type="text"

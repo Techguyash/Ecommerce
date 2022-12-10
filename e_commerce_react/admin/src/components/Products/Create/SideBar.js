@@ -27,7 +27,9 @@ const SideBar = (props) => {
 
         {/* <!-- Product Type --> */}
         <div className="my-3">
-          <p>Product Type</p>
+          <p>
+            Product Type <span className="my-1 text-danger">*</span>
+          </p>
           <div className="dflex justify-content-between align-items-center">
             <input
               className="inputAdd my-1"

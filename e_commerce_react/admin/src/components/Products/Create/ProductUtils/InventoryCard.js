@@ -42,7 +42,10 @@ const InventoryCard = (props) => {
           />
         </div>
         <div>
-          <label>Inventory (Stock Available)</label>
+          <label>
+            Inventory (Stock Available){" "}
+            <span className="my-1 text-danger">*</span>
+          </label>
           <input
             id="barcode"
             type="text"
@@ -55,7 +58,9 @@ const InventoryCard = (props) => {
           />
         </div>
         <div>
-          <label>Warranty (in months)</label>
+          <label>
+            Warranty (in months) <span className="my-1 text-danger">*</span>
+          </label>
           <input
             id="warranty"
             type="text"
