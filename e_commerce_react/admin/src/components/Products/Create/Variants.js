@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 
-const Footer = ({ formData }) => {
+const Footer = ({
+  formData,
+  colorsArray,
+  sizeArray,
+  setColorsArray,
+  setSizes,
+}) => {
   const [enableVariants, setEnableVariants] = useState(false);
-  const [colorsArray, setColors] = useState(["Red", "Green", "Blue", "Yellow"]);
-  const [sizeArray, setSizes] = useState(["S", "M", "L", "XL"]);
   const [sizeInput, setsizeInput] = useState("");
   const [colorInput, setColorInput] = useState("");
 
@@ -13,7 +17,7 @@ const Footer = ({ formData }) => {
     const filteredValue = colorsArray.filter((data, index) => {
       return indexToRemove !== index;
     });
-    setColors(filteredValue);
+    setColorsArray(filteredValue);
   };
 
   const sizeElementRemoveHandler = (indexToRemove) => {
@@ -29,7 +33,7 @@ const Footer = ({ formData }) => {
     if (input.length > 2) {
       let temp = colorsArray;
       temp.push(input);
-      setColors(temp);
+      setColorsArray(temp);
       setColorInput("");
       if (enableVariants) formData.colorVariants = colorsArray;
     }

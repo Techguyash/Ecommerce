@@ -1,9 +1,12 @@
 import axios from "../../axiosInstance";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { ProductsContext } from "../../../store/ProductsContext";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
 const Collection = () => {
+  const { setLoading, unSetLoading } = useContext(ProductsContext);
+
   const [Title, setTitle] = useState("");
   const [descript, setDescript] = useState("");
 
@@ -29,6 +32,7 @@ const Collection = () => {
 
     if (!errorTitle || !errorDescription) {
       console.log("Form valid");
+      setLoading();
       const payload = {
         name: Title,
         description: descript,
@@ -38,6 +42,7 @@ const Collection = () => {
         .then((response) => {
           console.log(response.data);
           if (response.data.isSuccess && !response.data.isError) {
+            unSetLoading();
             swal("category created Successfully !", {
               icon: "success",
             }).then((value) => {
@@ -46,6 +51,7 @@ const Collection = () => {
           }
         })
         .catch((error) => {
+          unSetLoading();
           console.log(error.errorMessage);
         });
       setDescript("");
@@ -59,8 +65,6 @@ const Collection = () => {
   const descriptionChangeHandler = (e) => {
     setDescript(e.target.value);
   };
-
-  useEffect(() => {}, []);
 
   const navigate = useNavigate();
 

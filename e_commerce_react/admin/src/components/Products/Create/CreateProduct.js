@@ -1,4 +1,6 @@
 import React, { useState, useContext } from "react";
+
+import { ProductsContext } from "../../../store/ProductsContext";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import axios from "../../axiosInstance";
@@ -11,22 +13,62 @@ import Form from "./Form";
 import InventoryCard from "./ProductUtils/InventoryCard";
 import PricingCard from "./ProductUtils/PricingCard";
 import SideBar from "./SideBar";
-import { async } from "@firebase/util";
-
 const CreateProduct = () => {
   const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({});
-  const [images, setImages] = useState([]);
-  const [titleInput, setTitleInput] = useState("");
-  const [formError, setFormError] = useState({
-    productName: false,
-    description: false,
-    brandName: false,
-    originalPrice: false,
-    price: false,
-    category: false,
+  const { setLoading, unSetLoading, getProducts } = useContext(ProductsContext);
+  const [formData, setFormData] = useState({
+    published: false,
   });
+  const [images, setImages] = useState([]);
+  // Form input data
+  const [productName, setProductName] = useState("");
+  const [descriptionInput, setDescriptionInput] = useState("");
+  const [brandNameInput, setBrandNameInput] = useState("");
+  const [featuredProduct, setFeaturedProduct] = useState(false);
+
+  //pricing input fields
+  const [pricingInput, setPricingInput] = useState(0);
+  const [originalPriceInput, setOriginalPriceInput] = useState(0);
+
+  //inventory input fields
+  const [ratingInp, setRatingInp] = useState(3.4);
+  const [replacementPolicyInp, setReplacementPolicyInp] = useState(0);
+  const [warrantyInp, setWarrantyInp] = useState(0);
+  const [stock, setStockInp] = useState(0);
+
+  //sidebar --> category
+  const [category, setCategory] = useState(null);
+
+  //product variants
+  const [colorsArray, setColorsArray] = useState([
+    "Red",
+    "Green",
+    "Blue",
+    "Yellow",
+  ]);
+  const [sizeArray, setSizes] = useState(["S", "M", "L", "XL"]);
+
+  //form valdattions
+
+  const checkFormInvalid = () => {
+    let result = false;
+    if (
+      productName.length < 6 ||
+      descriptionInput.length < 15 ||
+      brandNameInput.length < 3 ||
+      parseInt(originalPriceInput) <= 0 ||
+      parseInt(pricingInput) < parseInt(originalPriceInput) ||
+      images.length < 1
+    ) {
+      result = true;
+    }
+    return result;
+  };
+
+  const saveAndPublishHandler = () => {
+    formData.published = true;
+    onSaveToServer();
+  };
 
   const navigateToproductView = () => {
     navigate("/products/view");
@@ -60,78 +102,51 @@ const CreateProduct = () => {
     return data;
   };
 
-  const validateFormData = () => {
-    let result = false;
-    if (formData.productName.length < 5) {
-      setFormError((prev) => {
-        prev.productName = true;
-        result = true;
-        return prev;
-      });
-    }
-    if (formData.description.length < 15) {
-      setFormError((prev) => {
-        prev.description = true;
-        result = true;
-        return prev;
-      });
-    }
-    if (formData.brandName.length < 1) {
-      setFormError((prev) => {
-        prev.brandName = true;
-        result = true;
-        return prev;
-      });
-    }
-    if (formData.originalPrice < 1) {
-      setFormError((prev) => {
-        prev.originalPrice = true;
-        result = true;
-        return prev;
-      });
-    }
-
-    if (formData.price < 1) {
-      setFormError((prev) => {
-        prev.price = true;
-        result = true;
-        return prev;
-      });
-    }
-
-    if (formData.category === null) {
-      setFormError((prev) => {
-        prev.category = true;
-        result = true;
-        return prev;
-      });
-    }
-
-    return result;
-  };
-
   const onSaveToServer = async () => {
-    if (validateFormData()) {
+    if (checkFormInvalid()) {
       return;
     }
+    setLoading();
 
     const ImageUrls = await uploadImagesToFireBase();
+
+    //setting the payload data
+    formData.productName = productName;
+    formData.price = pricingInput;
+    formData.originalPrice = originalPriceInput;
+    formData.barCode = 0;
+    formData.category = category;
+    formData.sku = 1;
+    formData.warranty = warrantyInp;
+    formData.colorVariants = colorsArray;
+    formData.rating = ratingInp;
+    formData.stock = stock;
+    formData.brandName = brandNameInput;
+    formData.replacementPolicy = replacementPolicyInp;
     formData.imageUrl = ImageUrls;
+    formData.description = descriptionInput;
+    formData.featuredProduct = featuredProduct;
+
+    ///setting the payload parameter completed
+    console.log(formData);
     axios
       .post("/products", formData)
       .then((response) => {
         console.log(formData);
         console.log(response);
         if (response.data.isSuccess && !response.data.isError) {
+          unSetLoading();
           swal("Product created Successfully !", {
             icon: "success",
           }).then((value) => {
+            getProducts();
             navigate("/products/view");
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        unSetLoading();
       });
   };
 
@@ -155,27 +170,20 @@ const CreateProduct = () => {
         <div className="products__create__main">
           <Form
             formData={formData}
-            titleInput={titleInput}
-            setTitleInput={setTitleInput}
+            productName={productName}
+            setProductName={setProductName}
+            descriptionInput={descriptionInput}
+            setDescriptionInput={setDescriptionInput}
+            brandNameInput={brandNameInput}
+            setBrandNameInput={setBrandNameInput}
+            featuredProduct={featuredProduct}
+            setFeaturedProduct={setFeaturedProduct}
           />
 
           <div className="products__create__main--media card py-2 px-2 bg-white mt-2">
             <h3>Media</h3>
-            {/* <form className="products__create__main--media--form mt-2">
-              <label
-                className="products__create__main--media--form--label"
-                for="myfile"
-              >
-                Add Image
-              </label>
-              <input
-                className="products__create__main--media--form--input"
-                type="file"
-                id="myfile"
-                name="myfile"
-              />
-            </form> */}
-            {titleInput.length > 5 ? (
+
+            {productName.length > 5 ? (
               <ImageUploader images={images} setImages={setImages} />
             ) : (
               <h4 className="mt-2" style={{ fontWeight: "400", color: "red" }}>
@@ -183,36 +191,42 @@ const CreateProduct = () => {
               </h4>
             )}
             <div className="products__create__main--media--images mt-2">
-              <ul className="products__create__main--media--images--list list-unstyled">
-                {/* <ProductImgCard /> */}
-                {/* <li className="products__create__main--media--images--item">
-                  <form className="products__create__main--media--images--item--form">
-                    <label
-                      className="products__create__main--media--images--item--form--label"
-                      for="myfile"
-                    >
-                      Add Image
-                    </label>
-                    <input
-                      className="products__create__main--media--images--item--form--input"
-                      type="file"
-                      id="myfile"
-                      name="myfile"
-                    />
-                  </form>
-                </li> */}
-              </ul>
+              <ul className="products__create__main--media--images--list list-unstyled"></ul>
             </div>
           </div>
-          <PricingCard formData={formData} />
-          <InventoryCard formData={formData} />
-          <Footer formData={formData} />
+          <PricingCard
+            pricingInput={pricingInput}
+            setPricingInput={setPricingInput}
+            originalPriceInput={originalPriceInput}
+            setOriginalPriceInput={setOriginalPriceInput}
+          />
+          <InventoryCard
+            ratingInp={ratingInp}
+            replacementPolicyInp={replacementPolicyInp}
+            warrantyInp={warrantyInp}
+            stock={stock}
+            setRatingInp={setRatingInp}
+            setReplacementPolicyInp={setReplacementPolicyInp}
+            setWarrantyInp={setWarrantyInp}
+            setStockInp={setStockInp}
+          />
+          <Footer
+            colorsArray={colorsArray}
+            sizeArray={sizeArray}
+            setColorsArray={setColorsArray}
+            setSizes={setSizes}
+          />
         </div>
-        <SideBar formData={formData} />
+        <SideBar
+          selectedCategory={category}
+          setSelectedCategory={setCategory}
+        />
       </div>
 
       <div className="dflex justify-content-between align-items-center my-3">
-        <button className="btn btn-danger">Delete</button>
+        <button className="btn btn-danger" onClick={saveAndPublishHandler}>
+          Save and publish
+        </button>
         <button className="btn btn-secondary" onClick={onSaveToServer}>
           Save
         </button>

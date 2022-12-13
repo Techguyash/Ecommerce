@@ -1,11 +1,6 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 
 const Form = (props) => {
-  const titleRef = useRef();
-  const brandNameRef = useRef();
-  const descriptionRef = useRef();
-  const [featured, setFeatured] = useState(false);
-
   return (
     <div className="products__create__main--addInfo card py-2 px-2 bg-white">
       <p className="mb-1">Title</p>
@@ -14,16 +9,16 @@ const Form = (props) => {
         placeholder="e.g. Short sleeve t-shirt"
         className="input"
         name="productName"
-        ref={titleRef}
-        value={props.titleInput}
-        onBlur={() => {
-          props.formData.productName = titleRef.current.value;
-          console.log(props.formData);
-        }}
+        value={props.productName}
         onChange={(e) => {
-          props.setTitleInput(e.target.value);
+          props.setProductName(e.target.value);
         }}
       />
+      {props.productName.length < 5 && (
+        <p className="my-1 text-danger">
+          Product name must contain 5 characters
+        </p>
+      )}
 
       <p className="my-1">Brand</p>
       <input
@@ -31,33 +26,39 @@ const Form = (props) => {
         placeholder="e.g. Adidas, Sony"
         className="input"
         name="brandName"
-        ref={brandNameRef}
-        onBlur={() => {
-          props.formData.brandName = brandNameRef.current.value;
-          console.log(props.formData);
+        value={props.brandNameInput}
+        onChange={(e) => {
+          props.setBrandNameInput(e.target.value);
         }}
       />
+      {props.brandNameInput.length < 3 && (
+        <p className="my-1 text-danger">Brand name must contain 3 characters</p>
+      )}
 
-      <p className="my-1">Description (optional)</p>
+      <p className="my-1">Description </p>
       <textarea
         cols="30"
         rows="10"
         name="description"
-        ref={descriptionRef}
         className="textarea"
-        onBlur={() => {
-          props.formData.description = descriptionRef.current.value;
-          console.log(props.formData);
+        value={props.descriptionInput}
+        onChange={(e) => {
+          props.setDescriptionInput(e.target.value);
         }}
       ></textarea>
+      {props.descriptionInput.length < 15 && (
+        <p className="my-1 text-danger">
+          description must contain 15 characters
+        </p>
+      )}
 
       {/* <!-- featured --> */}
       <label className="checkbox-container mt-3">
         Make this product featured
         <input
           type="checkbox"
-          checked={featured}
-          onChange={() => setFeatured(!featured)}
+          checked={props.featuredProduct}
+          onChange={() => props.setFeaturedProduct(!props.featuredProduct)}
         />
         <span className="checkmark"></span>
       </label>

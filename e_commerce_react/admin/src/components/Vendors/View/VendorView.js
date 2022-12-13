@@ -1,28 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import emptyImg from "../../../assets/busy-marketing.svg";
 import Pagination from "../../UI/Pagination";
 import axios from "../../axiosInstance";
 import Vendor from "./Vendor";
-
-//Uncomment this to see the available product view
-
-let availableProducts = [
-  {
-    id: "1",
-    productName: "Super Extreme Nike Sports",
-    type: "Shoes",
-    count: "3",
-    img: "2.jpg",
-  },
-  {
-    id: "2",
-    productName: "Super Extreme Nike Shirt",
-    type: "Clothing",
-    count: "2",
-    img: "8.jpg",
-  },
-];
+import swal from "sweetalert";
 
 const EmptyVendors = () => {
   let navigate = useNavigate();
@@ -60,24 +42,7 @@ const EmptyVendors = () => {
   );
 };
 
-const AvailableVendors = () => {
-  const [availableVendors, setAvailableVendors] = useState([
-    {
-      id: "1",
-      VendorName: "Super Extreme Nike Sports",
-      type: "Shoes",
-      count: "3",
-      img: "2.jpg",
-    },
-    {
-      id: "2",
-      VendorName: "Super Extreme Nike Shirt",
-      type: "Clothing",
-      count: "2",
-      img: "8.jpg",
-    },
-  ]);
-
+const AvailableVendors = ({ vendorsList, fetchVendorData }) => {
   let navigate = useNavigate();
 
   const navigateVendorAdd = () => {
@@ -89,14 +54,24 @@ const AvailableVendors = () => {
   };
 
   const deleteVendorHandler = (id) => {
-    console.log("clicked");
-    console.log(availableVendors);
-    setAvailableVendors(
-      availableVendors.filter((data) => {
-        return data.id !== id;
-      })
-    );
-    console.log(availableVendors);
+    swal({
+      title: "Are you sure?",
+      text: "You want to delete this product?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: false,
+    }).then(async (updateData) => {
+      if (updateData) {
+        try {
+          const res = await axios.delete("/vendor/" + id);
+          if (res.data.data) {
+            fetchVendorData();
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
   };
 
   return (
@@ -167,25 +142,22 @@ const AvailableVendors = () => {
           </div>
         </div>
         <div className="table--heading mt-2 products__list__heading">
-          <p className="table--heading--col1">image</p>
+          {/* <p className="table--heading--col1">image</p> */}
           <p className="table--heading--col2">Vendor</p>
 
-          <p className="table--heading--col4">Type</p>
+          {/* <p className="table--heading--col4">Type</p> */}
           <p className="table--heading--col3">Inventory</p>
 
           <p className="table--heading--col5">actions</p>
         </div>
-        {availableVendors.map((data) => {
+        {vendorsList.map((data) => {
           return (
             <Vendor
-              key={data.id}
-              id={data.id}
-              VendorName={data.VendorName}
-              type={data.type}
-              count={data.count}
-              img={data.img}
-              navigateHandler={navigateEditVendor}
-              deleteHandler={deleteVendorHandler}
+              key={data.vendorId}
+              id={data.vendorId}
+              VendorName={data.vendorName}
+              count={0}
+              deleteVendorHandler={deleteVendorHandler}
             />
           );
         })}
@@ -199,22 +171,32 @@ const AvailableVendors = () => {
 };
 
 const VendorsView = (props) => {
-  const fetchVendorFromAPI = () => {
+  const [vendorsList, setVendorsList] = useState([]);
+
+  const fetchVendorData = () => {
     axios
-      .get("/vendor")
-      .then((response) => {
-        console.log(response.data.data);
+      .get("/vendor/")
+      .then((res) => {
+        setVendorsList(res.data.data);
+        console.log(vendorsList);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  fetchVendorFromAPI();
-
+  useEffect(() => {
+    fetchVendorData();
+  }, []);
   return (
     <div className="products">
-      {props.VendorList === null ? <EmptyVendors /> : <AvailableVendors />}
+      {vendorsList.length === 0 ? (
+        <EmptyVendors />
+      ) : (
+        <AvailableVendors
+          vendorsList={vendorsList}
+          fetchVendorData={fetchVendorData}
+        />
+      )}
     </div>
   );
 };

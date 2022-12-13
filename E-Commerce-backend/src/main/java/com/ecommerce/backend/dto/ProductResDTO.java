@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -34,6 +35,8 @@ public class ProductResDTO
 
 	private boolean featuredProduct;
 	private boolean isPublished;
+
+	private LocalDateTime createdOn;
 	@NotNull(message = "must not be empty")
 	private String brandName;
 	private int replacementPolicy;

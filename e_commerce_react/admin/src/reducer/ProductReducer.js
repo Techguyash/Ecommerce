@@ -17,14 +17,27 @@ const ProductReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: false,
+        unpublishedProducts: action.payload.filter((data) => {
+          return !data.published;
+        }),
         products: action.payload,
       };
+
+    case "SET_SINGLE_PRODUCT":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        singleProduct: action.payload,
+      };
+
     case "API_ERROR":
       return {
         ...state,
         isLoading: false,
         isError: true,
       };
+
     default:
       return state;
   }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,8 @@ public class Product
     private int replacementPolicy;
     private boolean featuredProduct;
 	private boolean isPublished;
+
+    private LocalDateTime createdOn;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

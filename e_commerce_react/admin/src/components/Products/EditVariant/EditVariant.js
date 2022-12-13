@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import defaultImg from "../../../assets/default-image.png";
 import PricingCard from "../Create/ProductUtils/PricingCard";
 import InventoryCard from "../Create/ProductUtils/InventoryCard";
 import Form from "./Form";
-import axios from "../../axiosInstance";
+import { ProductsContext } from "../../../store/ProductsContext";
 
 const VariantList = () => {
   return (
@@ -24,8 +24,29 @@ const VariantList = () => {
 const EditVariant = () => {
   let { id } = useParams();
   const navigate = useNavigate();
+  const { getProductsById, singleProduct } = useContext(ProductsContext);
 
-  const [product, setProduct] = useState({});
+  const [productName, setProductName] = useState(singleProduct.productName);
+  const [descriptionInput, setDescriptionInput] = useState(
+    singleProduct.description
+  );
+  const [brandNameInput, setBrandNameInput] = useState(singleProduct.brandName);
+  const [featuredProduct, setFeaturedProduct] = useState(
+    singleProduct.featuredProduct
+  );
+
+  //pricing input fields
+  const [pricingInput, setPricingInput] = useState(singleProduct.price);
+  const [originalPriceInput, setOriginalPriceInput] = useState(
+    singleProduct.originalPrice
+  );
+  //inventory fields
+  const [ratingInp, setRatingInp] = useState(singleProduct.rating);
+  const [replacementPolicyInp, setReplacementPolicyInp] = useState(
+    singleProduct.replacementPolicy
+  );
+  const [warrantyInp, setWarrantyInp] = useState(singleProduct.warranty);
+  const [stock, setStockInp] = useState(singleProduct.stock);
 
   if (!id || id === undefined || id === null) {
     navigate("/products/view/");
@@ -36,15 +57,26 @@ const EditVariant = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`/products/${id}`)
-      .then((res) => {
-        setProduct(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setProductName(singleProduct.productName);
+    setDescriptionInput(singleProduct.description);
+    setBrandNameInput(singleProduct.brandName);
+    setFeaturedProduct(singleProduct.featuredProduct);
+    setPricingInput(singleProduct.price);
+    setOriginalPriceInput(singleProduct.originalPrice);
+  }, [singleProduct]);
+
+  useEffect(() => {
+    getProductsById(id);
   }, []);
+  console.log(
+    productName +
+      " " +
+      descriptionInput +
+      " " +
+      brandNameInput +
+      " " +
+      featuredProduct
+  );
 
   return (
     <div className="products__variant__edit">
@@ -73,9 +105,9 @@ const EditVariant = () => {
               />
             </div>
             <div>
-              <p className="mb-1">{product.title}</p>
+              <p className="mb-1">{singleProduct.productName}</p>
               <p className="mb-1">7 variants</p>
-              <a>Back to product</a>
+              <div onClick={navigateProductView}>Back to product</div>
             </div>
           </div>
 
@@ -123,13 +155,38 @@ const EditVariant = () => {
             </div>
           </div>
 
+          {/* <Form
+            title={singleProduct.title}
+            description={singleProduct.description}
+            product={singleProduct}
+          /> */}
+
           <Form
-            title1={product.title}
-            description1={product.description}
-            product={product}
+            productName={productName}
+            setProductName={setProductName}
+            descriptionInput={descriptionInput}
+            setDescriptionInput={setDescriptionInput}
+            brandNameInput={brandNameInput}
+            setBrandNameInput={setBrandNameInput}
+            featuredProduct={featuredProduct}
+            setFeaturedProduct={setFeaturedProduct}
           />
-          <PricingCard product={product} />
-          <InventoryCard />
+          <PricingCard
+            pricingInput={pricingInput}
+            setPricingInput={setPricingInput}
+            originalPriceInput={originalPriceInput}
+            setOriginalPriceInput={setOriginalPriceInput}
+          />
+          <InventoryCard
+            ratingInp={ratingInp}
+            replacementPolicyInp={replacementPolicyInp}
+            warrantyInp={warrantyInp}
+            stock={stock}
+            setRatingInp={setRatingInp}
+            setReplacementPolicyInp={setReplacementPolicyInp}
+            setWarrantyInp={setWarrantyInp}
+            setStockInp={setStockInp}
+          />
         </div>
       </div>
     </div>

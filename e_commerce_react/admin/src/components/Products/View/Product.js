@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import swal from "sweetalert";
-import axios from "../../axiosInstance";
 import { fetchProducts } from "../ProductsAPI";
 import { ProductsContext } from "../../../store/ProductsContext";
 

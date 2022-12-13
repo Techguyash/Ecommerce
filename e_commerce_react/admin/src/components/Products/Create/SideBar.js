@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "../../axiosInstance";
-const SideBar = (props) => {
+const SideBar = ({ selectedCategory, setSelectedCategory }) => {
   const [collectionData, setcollectionData] = useState([]);
 
   function fetchCollectionData() {
@@ -43,8 +43,6 @@ const SideBar = (props) => {
 
           <select
             className="inputSelect"
-            name=""
-            id=""
             onChange={(val) => {
               let id = val.target.value;
               // console.log(id);
@@ -53,8 +51,8 @@ const SideBar = (props) => {
                   return data;
                 }
               });
-              props.formData.category = category[0];
-              console.log(props.formData);
+              setSelectedCategory(category[0]);
+              // console.log(selectedCategory);
             }}
             onClick={fetchCollectionData}
           >
@@ -65,13 +63,10 @@ const SideBar = (props) => {
                 </option>
               );
             })}
-            {/* <option value="">Shirts</option>
-            <option value="">Appliace</option>
-            <option value="">Pants</option>
-            <option value="">Watch</option>
-            <option value="">Gadgets</option>
-            <option value="">Phone</option> */}
           </select>
+          {selectedCategory == null && (
+            <p className="mt-1 ml-1 text-danger">Select a category</p>
+          )}
         </div>
         <hr />
 
@@ -103,7 +98,6 @@ const SideBar = (props) => {
       {/* <!--  Collections --> */}
       <div className="mt-2 card py-2 px-2 bg-white">
         <h3>Collections</h3>
-
         <div className="inputBrowse mt-3">
           <i className="inputBrowse__icon fas fa-search"></i>
           <input

@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class ProductsService_Impl implements ProductService
         }
         List<ImageUrls> imageUrls = imageUrlRepo.saveAll(ImageEntityList);
         product.setImageUrl(imageUrls);
+        product.setCreatedOn(LocalDateTime.now());
         Product savedEntity = productsRepo.save(product);
         ProductResDTO responseEntity = modelMapper.map(savedEntity, ProductResDTO.class);
         String[] colorArray = savedEntity.getColorVariants().split(",");
@@ -89,6 +91,7 @@ public class ProductsService_Impl implements ProductService
     public ProductResDTO updateProduct(ProductReqDTO req)
     {
         Product product = modelMapper.map(req, Product.class);
+        product.setCreatedOn(LocalDateTime.now());
         Product savedEntity = productsRepo.save(product);
         return modelMapper.map(savedEntity, ProductResDTO.class);
     }

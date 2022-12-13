@@ -4,6 +4,7 @@ import emptyImg from "../../../assets/busy-marketing.svg";
 import Pagination from "../../UI/Pagination";
 import Product from "./Product";
 import { ProductsContext } from "../../../store/ProductsContext";
+import { useEffect } from "react";
 //Uncomment this to see the available product view
 
 // let availableProducts = [
@@ -60,7 +61,11 @@ const EmptyProducts = (props) => {
   );
 };
 
-const AvailableProducts = ({ products }) => {
+const AvailableProducts = ({
+  products,
+  activateUnpublishedTab,
+  toggleTabs,
+}) => {
   let navigate = useNavigate();
 
   const navigateProductAdd = () => {
@@ -91,13 +96,23 @@ const AvailableProducts = ({ products }) => {
           </span>
           <div className="table--filter--listWrapper orders__table--filter--listWrapper">
             <ul className="table--filter--list list-unstyled dflex justify-content-start">
-              <li>
-                <p className="table--filter--link table--filter--link--active">
+              <li onClick={toggleTabs}>
+                <p
+                  className={`table--filter--link ${
+                    !activateUnpublishedTab && "table--filter--link--active"
+                  }`}
+                >
                   All Products
                 </p>
               </li>
-              <li>
-                <p className="table--filter--link">Unpublish</p>
+              <li onClick={toggleTabs}>
+                <p
+                  className={`table--filter--link ${
+                    activateUnpublishedTab && "table--filter--link--active"
+                  }`}
+                >
+                  Unpublish
+                </p>
               </li>
             </ul>
           </div>
@@ -157,14 +172,23 @@ const AvailableProducts = ({ products }) => {
 };
 
 const ProductsView = (props) => {
-  const { products } = useContext(ProductsContext);
+  const { products, unpublishedProducts } = useContext(ProductsContext);
+  const [activateUnpublishedTab, setActivateUnpublishedTab] = useState(false);
+
+  const toggleTabs = () => {
+    setActivateUnpublishedTab(!activateUnpublishedTab);
+  };
 
   return (
     <div className="products">
       {products.length < 1 ? (
         <EmptyProducts />
       ) : (
-        <AvailableProducts products={products} />
+        <AvailableProducts
+          products={activateUnpublishedTab ? unpublishedProducts : products}
+          activateUnpublishedTab={activateUnpublishedTab}
+          toggleTabs={toggleTabs}
+        />
       )}
     </div>
   );

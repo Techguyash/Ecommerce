@@ -7,16 +7,38 @@ const ProductsContext = createContext({
   isLoading: false,
   isError: false,
   products: [],
+  singleProduct: {},
+  unpublishedProducts: [],
   deleteProductHandler: () => {},
+  getProductsById: () => {},
+  setLoading: () => {},
+  unSetLoading: () => {},
 });
 
 const ProductsContextProvider = ({ children }) => {
+  const setLoading = () => {
+    dispatch({ type: "SET_LOADING" });
+  };
+  const unSetLoading = () => {
+    dispatch({ type: "SET_LOADING_FALSE" });
+  };
+
   const getProducts = async () => {
     dispatch({ type: "SET_LOADING" });
     try {
       const res = await axios.get("/products");
       const products = await res.data.data;
       dispatch({ type: "SET_API_DATA", payload: products });
+    } catch (error) {
+      dispatch({ type: "API_ERROR" });
+    }
+  };
+
+  const getProductsById = async (id) => {
+    try {
+      const res = await axios.get(`/products/${id}`);
+      const product = await res.data.data;
+      dispatch({ type: "SET_SINGLE_PRODUCT", payload: product });
     } catch (error) {
       dispatch({ type: "API_ERROR" });
     }
@@ -48,7 +70,12 @@ const ProductsContextProvider = ({ children }) => {
     isLoading: true,
     isError: false,
     products: [],
+    singleProduct: {},
     deleteProductHandler: deleteProductHandler,
+    setLoading: setLoading,
+    unSetLoading: unSetLoading,
+    getProducts: getProducts,
+    getProductsById: getProductsById,
   };
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);

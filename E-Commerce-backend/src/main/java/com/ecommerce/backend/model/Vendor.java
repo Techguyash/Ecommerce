@@ -21,5 +21,7 @@ public class Vendor
 	private String address;
 	private long phoneNo;
 
+	private boolean isPublished;
+
 
 }
