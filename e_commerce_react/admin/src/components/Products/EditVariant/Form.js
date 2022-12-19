@@ -11,6 +11,7 @@ const Form = (props) => {
         name="productName"
         value={props.productName}
         onChange={(e) => {
+          console.log(props.productName);
           props.setProductName(e.target.value);
         }}
       />

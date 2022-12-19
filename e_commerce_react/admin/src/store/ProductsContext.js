@@ -66,6 +66,30 @@ const ProductsContextProvider = ({ children }) => {
     });
   };
 
+  const updateProductHandler = async (productPayload) => {
+    console.log(productPayload);
+    let response;
+    swal({
+      title: "Are you sure?",
+      text: "You want to update this product?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: false,
+    }).then(async (updateData) => {
+      if (updateData) {
+        dispatch({ type: "SET_LOADING" });
+        try {
+          response = await axios.put("/products/", productPayload);
+          if (response.data.data) {
+            getProducts();
+          }
+        } catch (err) {
+          dispatch({ type: "API_ERROR" });
+        }
+      }
+    });
+    return response;
+  };
   const INITIAL_STATE = {
     isLoading: true,
     isError: false,
@@ -76,6 +100,7 @@ const ProductsContextProvider = ({ children }) => {
     unSetLoading: unSetLoading,
     getProducts: getProducts,
     getProductsById: getProductsById,
+    updateProductHandler: updateProductHandler,
   };
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);

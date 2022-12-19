@@ -6,26 +6,37 @@ import InventoryCard from "../Create/ProductUtils/InventoryCard";
 import Form from "./Form";
 import { ProductsContext } from "../../../store/ProductsContext";
 
-const VariantList = () => {
-  return (
-    <li className="products__variant__edit--sidebar--variants--item">
-      <div className="products__variant__edit--sidebar--variants--item--imgWrapper">
-        <img
-          src={defaultImg}
-          alt=""
-          className="products__variant__edit--sidebar--variants--item--img"
-        />
-      </div>
-      <p>Small / Red</p>
-    </li>
-  );
+const VariantList = ({ imageUrl }) => {
+  return imageUrl.map((data) => {
+    return (
+      <li
+        key={data.imageId}
+        className="products__variant__edit--sidebar--variants--item"
+      >
+        <div className="products__variant__edit--sidebar--variants--item--imgWrapper">
+          <img
+            src={data.imageUrl}
+            alt=""
+            className="products__variant__edit--sidebar--variants--item--img"
+          />
+        </div>
+        <p>Small / Red</p>
+      </li>
+    );
+  });
 };
 
 const EditVariant = () => {
   let { id } = useParams();
   const navigate = useNavigate();
-  const { getProductsById, singleProduct } = useContext(ProductsContext);
+  const { getProductsById, singleProduct, updateProductHandler } =
+    useContext(ProductsContext);
 
+  const [formData, setFormData] = useState({
+    published: false,
+  });
+
+  //products form data
   const [productName, setProductName] = useState(singleProduct.productName);
   const [descriptionInput, setDescriptionInput] = useState(
     singleProduct.description
@@ -63,20 +74,21 @@ const EditVariant = () => {
     setFeaturedProduct(singleProduct.featuredProduct);
     setPricingInput(singleProduct.price);
     setOriginalPriceInput(singleProduct.originalPrice);
+    setRatingInp(singleProduct.rating);
+    setReplacementPolicyInp(singleProduct.replacementPolicy);
+    setWarrantyInp(singleProduct.warranty);
+    setStockInp(singleProduct.stock);
   }, [singleProduct]);
 
   useEffect(() => {
     getProductsById(id);
   }, []);
-  console.log(
-    productName +
-      " " +
-      descriptionInput +
-      " " +
-      brandNameInput +
-      " " +
-      featuredProduct
-  );
+
+  //SENDING DATA TO API TO UPDATE PRODUCT
+
+  const updateHandler = async () => {
+    const response = await updateProductHandler(singleProduct);
+  };
 
   return (
     <div className="products__variant__edit">
@@ -91,7 +103,9 @@ const EditVariant = () => {
           <button className="btn btn-light" onClick={navigateProductView}>
             Discard
           </button>
-          <button className="btn btn-secondary ml-1">Save</button>
+          <button className="btn btn-secondary ml-1" onClick={updateHandler}>
+            Save
+          </button>
         </div>
       </div>
       <div className="products__variant__edit--cardWrapper">
@@ -112,11 +126,11 @@ const EditVariant = () => {
           </div>
 
           <div className="products__variant__edit--sidebar--variants card bg-white mt-2">
-            <h3 className="px-2 py-2">Variants</h3>
+            <h3 className="px-2 py-2">Product Images</h3>
             <ul className="products__variant__edit--sidebar--variants--list">
-              <VariantList />
-              <VariantList />
-              <VariantList />
+              {singleProduct.imageUrl && (
+                <VariantList imageUrl={singleProduct.imageUrl} />
+              )}
             </ul>
           </div>
         </div>
