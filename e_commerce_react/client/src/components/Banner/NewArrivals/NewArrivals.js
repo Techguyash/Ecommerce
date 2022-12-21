@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import img1 from "../../../assets/home/new1.png";
 import img2 from "../../../assets/home/new2.png";
 import img3 from "../../../assets/home/new3.png";
@@ -11,9 +12,9 @@ const NewArrivals = () => {
   return (
     <section className="new section" id="new">
       <h2 className="section-title">NEW ARRIVALS</h2>
-      <a href="#" className="section-all">
-        View All
-      </a>
+      <NavLink to={"/showproducts"} className="section-all">
+        VIEW ALL
+      </NavLink>
 
       <div className="new__container bd-grid">
         <NewProduct img={img1} />

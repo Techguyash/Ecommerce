@@ -1,19 +1,17 @@
 import React, { useContext } from "react";
 import FeaturePCard from "./FeaturePCard";
 import { ProductContext } from "../../../context/productContext";
-import { useNavigate } from "react-router";
+import { NavLink } from "react-router-dom";
 
 const FeaturedProducts = () => {
-  const navigate = useNavigate();
-
   const { featuredProducts } = useContext(ProductContext);
 
   return (
     <section className="featured section" id="featured">
       <h2 className="section-title">FEATURED PRODUCTS</h2>
-      <a href="#" className="section-all">
+      <NavLink to={"/showproducts"} className="section-all">
         VIEW ALL
-      </a>
+      </NavLink>
 
       <div className="featured__container bd-grid">
         {featuredProducts.map((val) => {

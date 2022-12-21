@@ -21,9 +21,7 @@ const Star = ({ stars, rating }) => {
 
   return (
     <div className={styles.star_content}>
-      <div>
-        {ratingStar} {stars}
-      </div>
+      <div>{ratingStar}</div>
       {/* <div className={styles.customerReview}>{rating} customers reviewed </div> */}
     </div>
   );
