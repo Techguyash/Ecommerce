@@ -1,10 +1,13 @@
-import React from "react";
-import img1 from "../../../assets/home/feature1.png";
-import img2 from "../../../assets/home/feature2.png";
-import img3 from "../../../assets/home/feature3.png";
-import img4 from "../../../assets/home/feature4.png";
+import React, { useContext } from "react";
 import FeaturePCard from "./FeaturePCard";
+import { ProductContext } from "../../../context/productContext";
+import { useNavigate } from "react-router";
+
 const FeaturedProducts = () => {
+  const navigate = useNavigate();
+
+  const { featuredProducts } = useContext(ProductContext);
+
   return (
     <section className="featured section" id="featured">
       <h2 className="section-title">FEATURED PRODUCTS</h2>
@@ -13,10 +16,17 @@ const FeaturedProducts = () => {
       </a>
 
       <div className="featured__container bd-grid">
-        <FeaturePCard imgUrl={img1} name="Headphone One Black" price="29" />
-        <FeaturePCard imgUrl={img2} name="Speaker Beats Pill" price="199" />
-        <FeaturePCard imgUrl={img3} name="Apple Air Pods" price="122" />
-        <FeaturePCard imgUrl={img4} name="Smartwatch F9 Negro" price="99" />
+        {featuredProducts.map((val) => {
+          return (
+            <FeaturePCard
+              key={val.productId}
+              id={val.productId}
+              imgUrl={val.imageUrl[0].imageUrl}
+              name={val.productName}
+              price={val.price}
+            />
+          );
+        })}
       </div>
     </section>
   );

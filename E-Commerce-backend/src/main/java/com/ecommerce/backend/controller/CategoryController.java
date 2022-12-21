@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin({"http://localhost:3000", "http://localhost:3001"})
 @RestController
 @RequestMapping("/category")
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Home.css";
 import BannerMain from "../../components/Banner/Main/BannerMain";
 import BannerCollection from "../../components/Banner/collections/Collections";
@@ -8,8 +8,11 @@ import AdBanner from "../../components/Banner/AdBanner";
 import NewArrivals from "../../components/Banner/NewArrivals/NewArrivals";
 import Subscription from "../../components/Banner/Subscription/Subscription";
 import Footer from "../../components/Banner/Footer/Footer";
+import { ProductContext } from "../../context/productContext";
 
 const Home = (props) => {
+  const { products } = useContext(ProductContext);
+
   return (
     <div className="l-main">
       <BannerMain />

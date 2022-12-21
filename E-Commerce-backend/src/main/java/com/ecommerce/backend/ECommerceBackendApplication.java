@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 		description = "App to serve for the ecommerce application request",
 version = "1.0",termsOfService = "Not for commercial or personal use. Privately owned")
 )
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin({"http://localhost:3000", "http://localhost:3001"})
 public class ECommerceBackendApplication {
 
 	public static void main(String[] args) {

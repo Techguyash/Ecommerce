@@ -9,9 +9,7 @@ import {
 } from "react-icons/ai";
 import { FiUser } from "react-icons/fi";
 
-const DropDown = () => {
-  const [isOpen, setisOpen] = useState(false);
-
+const DropDown = ({ isOpen, setisOpen }) => {
   return (
     <>
       <div

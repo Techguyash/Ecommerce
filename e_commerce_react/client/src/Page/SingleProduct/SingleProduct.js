@@ -1,6 +1,6 @@
-import React from "react";
-import "./SingleProduct.css";
+import React, { useContext, useEffect } from "react";
 
+import "./SingleProduct.css";
 import { AiFillStar } from "react-icons/ai";
 import { BiCheckShield } from "react-icons/bi";
 import { FaShippingFast } from "react-icons/fa";
@@ -10,74 +10,97 @@ import LeftPane from "./LeftPane";
 import Star from "../../components/UI/Star/Star";
 import PageNavigation from "../../components/PageNavigation/PageNavigation";
 import AddToCart from "../../components/AddToCart/AddToCart";
+import { useNavigate, useParams } from "react-router";
+import { ProductContext } from "../../context/productContext";
 const SingleProduct = () => {
+  const { getProductsById, singleProduct, isSingleProductLoading } =
+    useContext(ProductContext);
+
+  const { id } = useParams();
+  const navigate = useNavigate;
+
+  const {
+    productId,
+    productName,
+    brandName,
+    stock,
+    price,
+    imageUrl,
+    rating,
+    description,
+    warranty,
+    replacementPolicy,
+    colorVariants,
+  } = singleProduct;
+
+  useEffect(() => {
+    getProductsById(id);
+  }, []);
+
   const colors = ["#FF0000", "#00FF00", "#808080"];
   return (
     <React.Fragment>
       <div className="singleProd">
         {/* LEFT PANEL */}
-        <LeftPane />
+        {<LeftPane imageUrl={imageUrl} />}
         {/* RIGHT PANEL */}
         <div className="rightPart">
           <div className="singleProdNav">
-            <PageNavigation title={`SONY Alpha Full Frameeesassdfsf`} />
+            <PageNavigation title={`SONY Alpha Fullasdds`} />
           </div>
-          <div className="prodTitle">
-            SONY Alpha Full Frame ILCE-7M2K/BQ IN5 Mirrorless Camera Body with
-            28 - 70 mm Lens (Black)
-          </div>
+          <div className="prodTitle">{productName}</div>
           {/* review and rating */}
           <div className="rating_review_panel">
             <div className="rating_review_container">
-              <Star stars={3.5} rating={140} />
+              <Star stars={rating} rating={140} />
             </div>
           </div>
           {/* Price area */}
           <div className="pricePanel">
             <div className="offerPrice">
-              <CurrencySymbol price={11190} />
+              <CurrencySymbol price={price} />
             </div>
             <div className="actualPrice">
-              <CurrencySymbol price={1219012} />
+              <CurrencySymbol price={price} />
             </div>
             <div className="offerPercent">33% off</div>
           </div>
 
           <div className="services">
             <div className="freeDelivery">
-              <FaShippingFast />
+              <FaShippingFast fontSize={32} />
               <span className="service_desc">Fast Delivery</span>
             </div>
             <div className="replacementPolicy">
-              <TbReplace />
-              <span className="service_desc">30 Days Repalcement Policy</span>
+              <TbReplace fontSize={32} />
+              <span className="service_desc replace_policy">
+                {replacementPolicy} Days Repalcement Policy
+              </span>
             </div>
             <div className="warranty">
-              <BiCheckShield />
-              <span className="service_desc">1 year warranty</span>
+              <BiCheckShield fontSize={32} />
+              <span className="service_desc">{warranty} year warranty</span>
             </div>
           </div>
 
           <div className="prodDescript">
             <div className="descriptTitle">Product Summary</div>
-            <div className="descriptContent">
-              Click breathtaking photos and blur-free videos with this Sony α7
-              II DSLR camera - it provides you immense freedom to reinvent your
-              photography skills. This high-quality camera features a 5-axis
-              Image Stabilisation, a 35 mm Full-frame 24.3 MP Exmor CMOS Sensor,
-              and a Sony BIONZ X Image Processing Engine to allow you to capture
-              detailed, crisp, and blur-free images and movies.
-            </div>
+            <div className="descriptContent">{description}</div>
           </div>
           <div className="inStock">
             <span className="bold">Available :</span>
-            {/* <span style={{ color: "green", fontSize: "18px" }}>In Stock</span> */}
-            <span style={{ color: "red", fontSize: "18px" }}>Out of Stock</span>
+            {stock > 0 ? (
+              <span style={{ color: "green", fontSize: "18px" }}>In Stock</span>
+            ) : (
+              <span style={{ color: "red", fontSize: "18px" }}>
+                Out of Stock
+              </span>
+            )}
           </div>
           <div className="addToCartSection">
             {/* This section take singleProduct props */}
 
-            <AddToCart product={{ id: 1, colors: colors, stock: 5 }} />
+            <AddToCart product={{ id: 1, colors: colors, stock: stock }} />
           </div>
         </div>
       </div>

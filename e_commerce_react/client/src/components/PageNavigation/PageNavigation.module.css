@@ -1,12 +1,14 @@
 .pageNavContainer {
   /* background-color: green; */
-  width: 32%;
+  width: 40%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
+  margin-left: -15px;
 }
 .home {
   color: #e55947;
+  cursor: pointer;
 }

@@ -4,7 +4,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FiUser } from "react-icons/fi";
 import DropDown from "../UI/DropDown/DropDown";
 
-const NavBar = (props) => {
+const NavBar = ({ showNavDropDown, setshowNavDropDown }) => {
   const { isLoggedIn, toggleShowLogin } = useContext(AuthContext);
 
   const LoggedInMenus = () => {
@@ -18,7 +18,7 @@ const NavBar = (props) => {
 
         <li className="nav__item">
           <h4 className=" nav_icon">
-            <DropDown />
+            <DropDown isOpen={showNavDropDown} setisOpen={setshowNavDropDown} />
           </h4>
         </li>
       </>
