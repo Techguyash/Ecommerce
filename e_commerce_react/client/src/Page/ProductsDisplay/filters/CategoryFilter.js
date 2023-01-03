@@ -19,8 +19,8 @@ const CategoryFilter = () => {
     <div className={styles.main}>
       <div className={styles.title}>Categories</div>
       <button
-        key={1}
-        className={styles.list}
+        key={0}
+        className={`${styles.list} ${category === "all" && styles.active}`}
         name="category"
         value="all"
         type="button"
@@ -33,7 +33,9 @@ const CategoryFilter = () => {
         return (
           <button
             key={curr.id}
-            className={styles.list}
+            className={`${styles.list} ${
+              category === curr.name && styles.active
+            }`}
             name="category"
             value={curr.name}
             type="button"

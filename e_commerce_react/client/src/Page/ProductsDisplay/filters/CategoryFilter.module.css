@@ -1,5 +1,4 @@
 .main {
-  border: 2px solid rgb(84, 6, 185);
   width: 95%;
   height: 45%;
   display: flex;
@@ -30,4 +29,7 @@
 
 .list:hover {
   border-bottom: 1px solid grey;
+}
+.active{
+  color: #d2321e;
 }
