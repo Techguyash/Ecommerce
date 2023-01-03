@@ -33,6 +33,7 @@ export const FilterCtxProvider = ({ children }) => {
   const updateFilterValue = (event) => {
     let name = event.target.name;
     let value = event.target.value;
+
     return dispatch({ type: "UPDATE_FILTER_VALUE", payload: { name, value } });
   };
 
@@ -47,6 +48,7 @@ export const FilterCtxProvider = ({ children }) => {
     filters: {
       text: "",
       category: "all",
+      brand: "all",
     },
     updateFilterValue: updateFilterValue,
   };

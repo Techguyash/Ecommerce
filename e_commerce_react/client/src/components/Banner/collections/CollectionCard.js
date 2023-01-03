@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CollectionCard = ({ img, heading, title }) => {
   return (
@@ -10,9 +11,9 @@ const CollectionCard = ({ img, heading, title }) => {
           <br />
           {title}
         </h2>
-        <a href="#" className="collection__view">
+        <Link to="#" className="collection__view">
           View collection
-        </a>
+        </Link>
       </div>
     </div>
   );
