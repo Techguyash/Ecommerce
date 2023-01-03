@@ -1,25 +1,24 @@
-import React from "react";
-import ProductCard from "../../components/UI/ProductsCard/ProductCard";
+import React, { useContext } from "react";
+import GridView from "./views/GridView";
+import { FilterContext } from "../../context/filterContext";
+import ListView from "./views/ListView";
 import styles from "./ProductDisplay.module.css";
+import TopMenu from "./TopMenu";
+import FilterOptions from "./FilterOptions";
 
 const ProductDisplay = () => {
+  const { filter_products, grid_view } = useContext(FilterContext);
+
   return (
     <div className={styles.parent}>
       <div className={styles.row_1}>
-        <div className={styles.col_1}>Product filter options</div>
+        <div className={styles.col_1}>
+          <FilterOptions />
+        </div>
         <div className={styles.col_2}>
-          <div className={styles.col_2_menu}>mesdfgsdfgdfgnu</div>
-
-          <div className={styles.col_2_card_container}>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+          <TopMenu count={filter_products.length} />
+          <div className={styles.productContainer}>
+            {grid_view ? <GridView /> : <ListView />}
           </div>
         </div>
       </div>

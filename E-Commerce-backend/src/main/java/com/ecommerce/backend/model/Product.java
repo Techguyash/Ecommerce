@@ -16,11 +16,11 @@ import java.util.List;
 public class Product
 {
     @SequenceGenerator(sequenceName = "SeqProductId",name = "SeqProductId",initialValue = 1,allocationSize = 1)
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long productId;
     private String productName;
+    @Column(length = 300)
     private String Description;
     private double price;
     private double originalPrice;

@@ -5,13 +5,16 @@ import "./index.css";
 import App from "./App";
 import { ProductCtxProvider } from "./context/productContext";
 import { AuthCtxtProvider } from "./context/authContext";
+import { FilterCtxProvider } from "./context/filterContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <AuthCtxtProvider>
       <ProductCtxProvider>
-        <App />
+        <FilterCtxProvider>
+          <App />
+        </FilterCtxProvider>
       </ProductCtxProvider>
     </AuthCtxtProvider>
   </BrowserRouter>

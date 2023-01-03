@@ -63,6 +63,7 @@ html {
   font-size: var(--normal-font-size);
   color: var(--dark-color);
   line-height: 1.6;
+  height: max-content;
 }
 
 h1,

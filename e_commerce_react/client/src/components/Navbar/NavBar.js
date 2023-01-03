@@ -3,6 +3,7 @@ import { AuthContext } from "../../context/authContext";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FiUser } from "react-icons/fi";
 import DropDown from "../UI/DropDown/DropDown";
+import { NavLink } from "react-router-dom";
 
 const NavBar = ({ showNavDropDown, setshowNavDropDown }) => {
   const { isLoggedIn, toggleShowLogin } = useContext(AuthContext);
@@ -29,7 +30,9 @@ const NavBar = ({ showNavDropDown, setshowNavDropDown }) => {
     <header className="l-header">
       <nav className="nav bd-grid">
         <div>
-          <h3 className="nav__logo">TRACKME</h3>
+          <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
+            <h3 className="nav__logo">TRACKME</h3>
+          </NavLink>
         </div>
 
         <div className="nav__menu" id="nav-menu">

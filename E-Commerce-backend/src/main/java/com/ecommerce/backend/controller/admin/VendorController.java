@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.admin;
 
 import com.ecommerce.backend.apiResponse.APIResponse;
 import com.ecommerce.backend.model.Vendor;

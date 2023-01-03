@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.client;
 
 import com.ecommerce.backend.apiResponse.APIResponse;
 import com.ecommerce.backend.dto.CategoryDTO;
@@ -13,9 +13,9 @@ import java.util.List;
 
 @CrossOrigin({"http://localhost:3000", "http://localhost:3001"})
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/client/category")
 @AllArgsConstructor
-public class CategoryController
+public class CCategoryController
 {
 
 	CategoryService categoryService;
@@ -67,3 +67,4 @@ public class CategoryController
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }
+

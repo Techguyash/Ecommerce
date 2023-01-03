@@ -34,6 +34,14 @@ const ProductReducer = (state, action) => {
         singleProduct: action.payload,
         isSingleProductLoading: false,
       };
+
+    case "SET_API_CATEGORY":
+      return {
+        ...state,
+        Allcategories: action.payload,
+        isLoadin: false,
+      };
+
     default:
       return state;
   }

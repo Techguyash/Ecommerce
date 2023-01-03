@@ -12,6 +12,8 @@ const ProductContext = createContext({
   getProductsById: () => {},
   setLoading: () => {},
   unSetLoading: () => {},
+  Allcategories: [],
+  getCategory: () => {},
 });
 
 const ProductCtxProvider = (props) => {
@@ -22,6 +24,17 @@ const ProductCtxProvider = (props) => {
       const products = await res.data.data;
       dispatch({ type: "SET_API_DATA", payload: products });
     } catch (error) {
+      dispatch({ type: "API_ERROR" });
+    }
+  };
+
+  const getCategory = async () => {
+    dispatch({ type: "SET_LOADING" });
+    try {
+      const res = await axios.get("/category");
+      const categories = await res.data.data;
+      dispatch({ type: "SET_API_CATEGORY", payload: categories });
+    } catch (e) {
       dispatch({ type: "API_ERROR" });
     }
   };
@@ -45,12 +58,15 @@ const ProductCtxProvider = (props) => {
     singleProduct: {},
     isSingleProductLoading: false,
     getProductsById: getProductsById,
+    Allcategories: [],
+    getCategory: getCategory,
   };
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   useEffect(() => {
     getProducts();
+    getCategory();
   }, []);
 
   return (

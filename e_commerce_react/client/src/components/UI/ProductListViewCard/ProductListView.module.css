@@ -1,0 +1,61 @@
+.productCard {
+  background-color: rgb(205, 211, 209);
+  height: 40%;
+  width: 100%;
+  display: flex;
+}
+.col1 {
+  /* background-color: darkgoldenrod; */
+  width: 30%;
+  height: 100%;
+  border-right: 1px solid rgb(236, 220, 220);
+}
+.col2 {
+  /* background-color: darkgreen; */
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.title {
+  font-size: 1.6em;
+  font-weight: 700;
+  /* background-color: violet; */
+  margin-left: 5px;
+  padding: 5px;
+}
+.brand {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 1.3em;
+  color: grey;
+  font-weight: 600;
+  display: flex;
+  margin-left: 6px;
+  /* background-color: aquamarine; */
+}
+.rating {
+  /* background-color: greenyellow; */
+  display: flex;
+  padding: 2px;
+  margin-left: 6px;
+}
+.ratingText {
+  background-color: #d2321e;
+  width: 50px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.price {
+  /* background-color: springgreen; */
+  margin-left: 6px;
+  font-size: 1.4em;
+}
+.description {
+  /* background-color: thistle; */
+  margin-left: 6px;
+  font-size: 1.1em;
+  padding: 2px;
+}
