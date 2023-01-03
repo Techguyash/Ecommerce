@@ -13,6 +13,8 @@
   --dark-color: #101010;
   --dark-color-light: #606060;
   --gray-color: #f0f1f3;
+  --blue-color: #5bccf6;
+  --blue-color-alt: #21bcf5;
   /* --gray-color: #7289b62d; */
 }
 
@@ -32,7 +34,7 @@
     --h1-font-size: 2.25rem;
     --h2-font-size: 1.5rem;
     --normal-font-size: 1rem;
-    --small-font-size: 0.813rem;
+    --small-font-size: 0.913rem;
   }
 }
 
@@ -120,7 +122,7 @@ img {
   top: 0;
   left: 0;
   z-index: 90;
-  background-color: var(--gray-color);
+  background-color: #fcde67;
 }
 
 .nav {
@@ -129,6 +131,7 @@ img {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  background-color: #fcde67;
 }
 
 @media screen and (max-width: 768px) {
@@ -181,7 +184,7 @@ img {
 }
 
 .home {
-  background-color: var(--gray-color);
+  background-color: #fcde67;
 }
 
 .home__container {
@@ -213,8 +216,8 @@ img {
 
 .button {
   display: inline-block;
-  background-color: var(--first-color);
-  color: var(--white-color);
+  background-color: var(--blue-color);
+  color: var(--dark-color);
   padding: 1rem;
   font-size: var(--small-font-size);
   font-weight: var(--font-semi);
@@ -225,11 +228,11 @@ img {
 }
 
 .button:hover {
-  background-color: var(--first-color-alt);
+  background-color: var(--blue-color-alt);
 }
 
 .loginBtn {
-  background-color: var(--first-color);
+  background-color: var(--blue-color);
   color: var(--white-color);
   padding: 1rem;
   font-size: var(--small-font-size);
