@@ -19,7 +19,7 @@ public class TestController
         try
         {
             response = new APIResponse();
-            response.setData(new String("Hello World"));
+			response.setPayload(new String("Hello World"));
         }
         catch (Exception e)
         {
@@ -29,10 +29,5 @@ public class TestController
         return new ResponseEntity<>(response, response.getIsError() ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.OK);
     }
 
-    @GetMapping("/hai")
-    public ResponseEntity<String> hai()
-    {
 
-        return new ResponseEntity<>("HAi", HttpStatus.ACCEPTED);
-    }
 }

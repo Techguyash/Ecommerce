@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class ProductReqDTO
 {
-	private long productId;
+
 	@NotNull(message = "must not be empty")
 	private String productName;
 	@NotNull(message = "must not be empty")

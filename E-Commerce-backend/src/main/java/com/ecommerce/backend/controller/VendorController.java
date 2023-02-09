@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller.admin;
+package com.ecommerce.backend.controller;
 
 import com.ecommerce.backend.apiResponse.APIResponse;
 import com.ecommerce.backend.model.Vendor;
@@ -21,7 +21,7 @@ public class VendorController {
 	public ResponseEntity<APIResponse> createVendor(@RequestBody Vendor vendor) {
 		APIResponse apiResponse = new APIResponse();
 		Vendor response = vendorService.createVendor(vendor);
-		apiResponse.setData(response);
+		apiResponse.setPayload(response);
 		return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
 	}
 
@@ -29,7 +29,7 @@ public class VendorController {
 	public ResponseEntity<APIResponse> getVendor() {
 		APIResponse response = new APIResponse();
 		List<Vendor> vendors = vendorService.fetchVendor();
-		response.setData(vendors);
+		response.setPayload(vendors);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -37,7 +37,7 @@ public class VendorController {
 	public ResponseEntity<APIResponse> getVendor(@PathVariable long id) {
 		APIResponse response = new APIResponse();
 		Vendor vendor = vendorService.fetchVendor(id);
-		response.setData(vendor);
+		response.setPayload(vendor);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -45,7 +45,7 @@ public class VendorController {
 	public ResponseEntity<APIResponse> updateVendor(@RequestBody Vendor vendor) {
 		APIResponse response = new APIResponse();
 		Vendor vendor1 = vendorService.updateVendor(vendor);
-		response.setData(vendor1);
+		response.setPayload(vendor1);
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 
@@ -53,7 +53,7 @@ public class VendorController {
 	public ResponseEntity<APIResponse> deleteVendor(@PathVariable long id) {
 		APIResponse response = new APIResponse();
 		boolean b = vendorService.deleteVendor(id);
-		response.setData(b);
+		response.setPayload(b);
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 

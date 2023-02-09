@@ -46,19 +46,19 @@ public class GlobalException extends ResponseEntityExceptionHandler
                                                                   HttpHeaders headers, HttpStatus status,
                                                                   WebRequest request)
     {
-        ex.printStackTrace();
-        APIResponse response = new APIResponse();
-        response.setIsError(Boolean.TRUE);
-        Map<String, String> errorBody = new HashMap<>();
-        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-        for (FieldError error : fieldErrors)
-        {
-            errorBody.put(error.getField(), error.getDefaultMessage());
-        }
-        response.setData(errorBody);
-        response = ApiResponseError.returnApiResponse(response, ex);
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
+		ex.printStackTrace();
+		APIResponse response = new APIResponse();
+		response.setIsError(Boolean.TRUE);
+		Map<String, String> errorBody = new HashMap<>();
+		List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+		for (FieldError error : fieldErrors)
+		{
+			errorBody.put(error.getField(), error.getDefaultMessage());
+		}
+		response.setPayload(errorBody);
+		response = ApiResponseError.returnApiResponse(response, ex);
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<APIResponse> handleGenericException(Exception ex)

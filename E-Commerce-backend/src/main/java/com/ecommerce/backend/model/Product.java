@@ -27,7 +27,6 @@ public class Product
     private long barCode;
     private long sku;
     private int warranty;
-
     @Column(nullable = true)
     private String colorVariants;
     private double rating;

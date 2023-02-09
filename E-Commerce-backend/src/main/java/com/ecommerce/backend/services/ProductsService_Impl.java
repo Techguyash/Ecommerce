@@ -10,6 +10,9 @@ import com.ecommerce.backend.repo.ImageUrlRepo;
 import com.ecommerce.backend.repo.ProductsRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -78,13 +81,7 @@ public class ProductsService_Impl implements ProductService
     {
         List<Product> all = productsRepo.findAll();
         List<ProductResDTO> resDTO=new ArrayList<>();
-        all.stream().forEach(product -> {
-            String[] splittedColor = product.getColorVariants().split(",");
-            ProductResDTO mappedEntity = modelMapper.map(product, ProductResDTO.class);
-            mappedEntity.setColorVariants(splittedColor);
-            resDTO.add(mappedEntity);
-        });
-        return resDTO;
+		return mapToDTO(all);
     }
 
     @Override
@@ -98,16 +95,50 @@ public class ProductsService_Impl implements ProductService
 
     @Override
     public boolean deleteProduct(long Id)
-    {
-        ProductResDTO product = getProduct(Id);
-        if(product==null) throw new NoDataFoundException("Product",String.valueOf(Id));
-        productsRepo.deleteById(Id);
-        return true;
-    }
+	{
+		ProductResDTO product = getProduct(Id);
+		if (product == null)
+		{
+			throw new NoDataFoundException("Product", String.valueOf(Id));
+		}
+		productsRepo.deleteById(Id);
+		return true;
+	}
 
-    @Override
-    public Integer countProductsByCategory(Category category)
-    {
-        return productsRepo.countByCategory(category);
-    }
+	@Override
+	public Integer countProductsByCategory(Category category)
+	{
+		return productsRepo.countByCategory(category);
+	}
+
+	@Override
+	public List<ProductResDTO> getAllProducts(int pageNumber, int limit)
+	{
+		Pageable page = PageRequest.of(pageNumber, limit);
+		List<Product> all = productsRepo.findAll(page).getContent();
+		return mapToDTO(all);
+	}
+
+	@Override
+	public List<ProductResDTO> getAllProductsSortBy(String field)
+	{
+		Sort sortByField = Sort.by(field);
+		List<Product> all = productsRepo.findAll(sortByField);
+		return mapToDTO(all);
+
+	}
+
+
+	public List<ProductResDTO> mapToDTO(List<Product> all)
+	{
+		List<ProductResDTO> resDTO = new ArrayList<>();
+		all.stream().forEach(product ->
+							 {
+								 String[] splittedColor = product.getColorVariants().split(",");
+								 ProductResDTO mappedEntity = modelMapper.map(product, ProductResDTO.class);
+								 mappedEntity.setColorVariants(splittedColor);
+								 resDTO.add(mappedEntity);
+							 });
+		return resDTO;
+	}
 }

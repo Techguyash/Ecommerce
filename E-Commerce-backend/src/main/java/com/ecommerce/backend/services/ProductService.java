@@ -20,5 +20,7 @@ public interface ProductService
 
     public Integer countProductsByCategory(Category category);
 
+	List<ProductResDTO> getAllProducts(int pageNumber, int limit);
 
+	List<ProductResDTO> getAllProductsSortBy(String field);
 }

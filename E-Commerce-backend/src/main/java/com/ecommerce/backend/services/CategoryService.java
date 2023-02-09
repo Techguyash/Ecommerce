@@ -13,6 +13,11 @@ public interface CategoryService
 
 	List<CategoryDTO> getAllCategories();
 
+	public List<CategoryDTO> getAllCategories(int pageNumber, int limit);
+
+	public List<CategoryDTO> getAllCategoriesSortBy(String field);
+
+
 	CategoryDTO updateCategory(CategoryDTO req);
 
 	boolean deleteCategory(long Id);

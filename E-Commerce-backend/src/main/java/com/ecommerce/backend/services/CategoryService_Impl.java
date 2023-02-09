@@ -7,6 +7,10 @@ import com.ecommerce.backend.repo.CategoryRepo;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,23 +49,62 @@ public class CategoryService_Impl implements CategoryService {
         return map;
     }
 
-    @Override
-    public List<CategoryDTO> getAllCategories() {
-        List<Category> categoryList = categoryRepo.findAll();
-        if (categoryList.size() == 0) {
-            throw new NoDataFoundException("No data available");
-        }
+	@Override
+	public List<CategoryDTO> getAllCategories()
+	{
+		List<Category> categoryList = categoryRepo.findAll();
+		//        check for empty response
+		checkSizeElseThrowNoData(categoryList);
 
-        List<CategoryDTO> resDto = new ArrayList<>();
-        categoryList.stream().forEach(category -> {
-            Integer count = productService.countProductsByCategory(category);
-            CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
-            categoryDTO.setTotalProducts(count);
+		List<CategoryDTO> resDto = new ArrayList<>();
+		categoryList.stream().forEach(category ->
+									  {
+										  Integer count = productService.countProductsByCategory(category);
+										  CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
+										  categoryDTO.setTotalProducts(count);
 
-            resDto.add(categoryDTO);
-        });
-        return resDto;
-    }
+										  resDto.add(categoryDTO);
+									  });
+		return resDto;
+	}
+
+	@Override
+	public List<CategoryDTO> getAllCategories(int pageNumber, int limit)
+	{
+		Pageable page = PageRequest.of(pageNumber, limit);
+		Page<Category> all = categoryRepo.findAll(page);
+		List<Category> categoryList = all.getContent();
+//        check for empty response
+		checkSizeElseThrowNoData(categoryList);
+
+		List<CategoryDTO> resDto = new ArrayList<>();
+		categoryList.stream().forEach(category ->
+									  {
+										  Integer count = productService.countProductsByCategory(category);
+										  CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
+										  categoryDTO.setTotalProducts(count);
+										  resDto.add(categoryDTO);
+									  });
+		return resDto;
+	}
+
+	@Override
+	public List<CategoryDTO> getAllCategoriesSortBy(String field)
+	{
+		Sort sortByField = Sort.by(field);
+		List<Category> categoryList = categoryRepo.findAll(sortByField);
+		checkSizeElseThrowNoData(categoryList);
+		List<CategoryDTO> resDto = new ArrayList<>();
+		categoryList.stream().forEach(category ->
+									  {
+										  Integer count = productService.countProductsByCategory(category);
+										  CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
+										  categoryDTO.setTotalProducts(count);
+										  resDto.add(categoryDTO);
+									  });
+		return resDto;
+
+	}
 
     @Override
     public CategoryDTO updateCategory(CategoryDTO req) {
@@ -76,13 +119,22 @@ public class CategoryService_Impl implements CategoryService {
         if (category == null) {
             throw new NoDataFoundException("Category", String.valueOf(Id));
         }
-        categoryRepo.deleteById(Id);
-        return true;
-    }
+		categoryRepo.deleteById(Id);
+		return true;
+	}
 
-    @Override
-    public Category getCategoryModel(long id) {
-        return categoryRepo.findById(id).get();
-    }
+	@Override
+	public Category getCategoryModel(long id)
+	{
+		return categoryRepo.findById(id).get();
+	}
+
+	public void checkSizeElseThrowNoData(List<Category> categoryList)
+	{
+		if (categoryList.size() == 0)
+		{
+			throw new NoDataFoundException("No data available");
+		}
+	}
 
 }

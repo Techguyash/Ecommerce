@@ -20,12 +20,12 @@ public class APIResponse
 
     private String debugMessage = null;
 
-    private Object data;
+    private Object payload;
 
     public APIResponse(Object data)
     {
         this();
-        this.data = data;
+        this.payload = data;
     }
 
     public APIResponse()
